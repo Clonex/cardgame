@@ -18,4 +18,12 @@ export default class Player {
     {
         this.cards = this.cards.filter(d => d !== card);
     }
+
+    play(cardID, game)
+    {
+        const card = this.cards.find(card => card.id === cardID);
+        card?.play(game);
+
+        return card;
+    }
 }
