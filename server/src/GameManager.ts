@@ -24,38 +24,46 @@ export default class GameManager {
 
     killConnection(conn)
     {
-        conn.player.connection = false;
+        console.log("Kill connection", conn.player);
+        if(conn.player)
+        {
+            conn.player.connection = false;
+        }
     }
 
-    parseData(data, conn)
+    parseData(d, conn)
     {
+        const data = JSON.parse(d);
+
+        console.log("GOt someting", data);
         switch(data.cmd)
         {
             case "startGame":
             {
                 const game = this.startGame(data.size);
 
-                conn.send(JSON.stringify({
+                this.send({
                     cmd: data.cmd,
                     id: game.id,
-                }));
+                }, conn);
             }
             break;
             case "joinGame":
             {
-                const game = this.getGame(data.id);
+                const game = this.getGame(data.gameID);
                 if(game)
                 {
                     const player = game.getPlayer(data.playerID);
-                    if(player)
+                    console.log("Joining!", player);
+                    if(player && !player.connection)
                     {
                         player.connection = conn;
                         conn.player = player;
 
-                        conn.send(JSON.stringify({
+                        this.send({
                             cmd: data.cmd,
                             id: player.id,
-                        }));
+                        }, conn);
                     }
                 }
             }
@@ -70,18 +78,27 @@ export default class GameManager {
                     {
                         player.connection = conn;
                         conn.player = player;
-
                     }
-                    conn.send(JSON.stringify({
+                    this.send({
                         cmd: data.cmd,
                         players: game._players.map(player => ({
                             id: player.id,
-                            open: !!player.connection,
+                            open: !player.connection,
                         })),
-                    }));
+                    }, conn);
                 }
             }
             break;
+            case "ping":
+                this.send({
+                    cmd: "pong"
+                }, conn);
+            break;
         }
+    }
+
+    send(data, conn)
+    {
+        conn.send(JSON.stringify(data));
     }
 }
