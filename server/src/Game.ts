@@ -14,7 +14,7 @@ export default class Game {
     {
         for(let i = 0; i < players; i++)
         {
-            const temp = new Player();
+            const temp = new Player(this);
             this._players.push(temp);
 
             for(let j = 0; j < startingCards; j++)
@@ -29,8 +29,8 @@ export default class Game {
         const player = this.getPlayer(playerID);
         if(this.currentTurn === this._players.indexOf(player) && player)
         {
-            const card = player.play(cardID, this);
-            if(card.playable(this.cardStack[0]))
+            const card = player.play(cardID);
+            if(card?.playable(this.cardStack[0]))
             {
                 if(card)
                 {
@@ -60,14 +60,18 @@ export default class Game {
         }
     }
 
-    nextPlayer()
+    get nextPlayer()
     {
         this.nextTurn(); // Hacky method?? Go to next player and save it, then go back to the last player
-        const player = this._players[this.currentTurn];
+        const player = this.currentPlayer;
         this.direction = this.direction === "left" ? "right" : "left";
         this.nextTurn();
         this.direction = this.direction === "left" ? "right" : "left";
 
         return player;
+    }
+
+    get currentPlayer() {
+        return this._players[this.currentTurn];
     }
 }

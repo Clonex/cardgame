@@ -9,15 +9,15 @@ export default class Card {
     type: "1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|"reverse"|"skip"|"wild"|"+1"|"+4";
     color: "red"|"blue"|"green"|"yellow"|"none";
 
-    constructor(type, parent)
+    constructor(type: Card['type'], parent)
     {
         this.type = type;
         this.parent = parent;
     }
 
-    play(game: Game, color?: "red"|"blue"|"green"|"yellow")
+    play(game: Game, color?: Card['color'])
     {
-        const nextPlayer = game.nextPlayer();
+        const nextPlayer = game.nextPlayer;
         switch(this.type)
         {
             case "reverse":
