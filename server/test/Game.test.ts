@@ -1,5 +1,7 @@
-var assert = require('assert');
+import {assert} from 'chai';
 
+
+// console.log(_chai);
 describe('Test Suite 1', function() {
     it('Test 1', function() {
         assert.ok(true, "This shouldn't fail");
