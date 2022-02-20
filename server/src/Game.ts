@@ -9,6 +9,13 @@ export default class Game {
     cardStack: Card[] = [];
 
     direction: "left"|"right" = "left";
+    
+    turnIncrementSize = 1;
+    drawBuffer = 0;
+
+    settings = {
+        MUST_DRAW: true,
+    };
 
     constructor(players = 3, startingCards = 6)
     {
@@ -24,6 +31,7 @@ export default class Game {
         }
     }
 
+
     play(playerID, cardID)
     {
         const player = this.getPlayer(playerID);
@@ -36,7 +44,7 @@ export default class Game {
                 {
                     this.cardStack.push(card);
                 }
-                this.nextTurn();
+                // this.nextTurn();
             }
         }
     }
@@ -46,16 +54,27 @@ export default class Game {
         return this._players.find(player => player.id === playerID);
     }
 
+    endTurn()
+    {
+        if(!this.currentPlayer.didPlay && !this.currentPlayer.didDraw && this.settings.MUST_DRAW)
+        {
+            this.currentPlayer.drawCard();
+        }
+        this.currentPlayer.turnReset();
+        this.nextTurn();
+        this.turnIncrementSize = 1;
+    }
+    
     nextTurn()
     {
         if(this.direction === "left")
         {
-            this.currentTurn = (this.currentTurn + 1) % this._players.length;
+            this.currentTurn = (this.currentTurn + this.turnIncrementSize) % this._players.length;
         }else{
-            this.currentTurn = this.currentTurn - 1;
+            this.currentTurn = this.currentTurn - this.turnIncrementSize;
             if(this.currentTurn < 0)
             {
-                this.currentTurn = this._players.length - 1;
+                this.currentTurn = this._players.length - this.turnIncrementSize;
             }
         }
     }

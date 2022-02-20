@@ -9,9 +9,10 @@ export default class Card {
     type: "1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|"reverse"|"skip"|"wild"|"+1"|"+4";
     color: "red"|"blue"|"green"|"yellow"|"none";
 
-    constructor(type: Card['type'], parent)
+    constructor(type: Card['type'], color: Card['color'], parent)
     {
         this.type = type;
+        this.color = color;
         this.parent = parent;
     }
 
@@ -24,20 +25,24 @@ export default class Card {
                 game.direction = game.direction === "left" ? "right" : "left";
             break;
             case "skip":
-                game.nextTurn();
+                // game.nextTurn();
+                game.turnIncrementSize++;
             break;
             case "wild":
                 this.color = color;
             break;
             case "+4":
                 this.color = color;
-                for(let i = 0; i < 4; i++){
-                    nextPlayer.drawCard();
-                }
+                game.drawBuffer += 4;
+                // for(let i = 0; i < 4; i++){
+                //     nextPlayer.drawCard();
+                // }
             break;
             case "+1":
                 this.color = color;
-                nextPlayer.drawCard();
+                // nextPlayer.drawCard();
+                
+                game.drawBuffer += 1;
             break;
         }
 
@@ -46,11 +51,8 @@ export default class Card {
 
     playable(lastCard?: Card)
     {
-        if(lastCard && lastCard.color !== this.color)
-        {
-            return false;
-        }
-
-        return true;
+        return  !lastCard ||    // Empty draw pile
+                !(this.parent.parent.drawBuffer > 0 && lastCard.type !== this.type) || // Player can only put down a +1/+4 card if there is something in drawBuffer
+                lastCard.color === this.color; // Last card has same color as current
     }
 }
