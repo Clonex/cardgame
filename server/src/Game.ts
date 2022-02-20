@@ -1,7 +1,9 @@
+import uid from "uid-safe";
 import Player from "./Player";
 import Card from "./Card";
 
 export default class Game {
+    id = uid.sync(18);
     currentTurn: number = 0;
     _players: Player[] = [];
     cardStack: Card[] = [];
@@ -13,12 +15,8 @@ export default class Game {
         for(let i = 0; i < players; i++)
         {
             const temp = new Player();
-            // if(!this.currentTurn)
-            // {
-            //     this.currentTurn = temp.id;
-            // }
-
             this._players.push(temp);
+
             for(let j = 0; j < startingCards; j++)
             {
                 temp.drawCard();
@@ -64,7 +62,7 @@ export default class Game {
 
     nextPlayer()
     {
-        this.nextTurn(); // Hacky method??
+        this.nextTurn(); // Hacky method?? Go to next player and save it, then go back to the last player
         const player = this._players[this.currentTurn];
         this.direction = this.direction === "left" ? "right" : "left";
         this.nextTurn();
