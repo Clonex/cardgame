@@ -10,6 +10,7 @@ export default class ConnectionHandler {
             setInterval(() =>  this.send({cmd: "ping"}), 1000 * 60 * 2);
         };
         this.ws.onmessage = data => this.onData(data);
+        this.ws.onclose = () => window.location.reload();
 
     }
 
@@ -26,6 +27,24 @@ export default class ConnectionHandler {
                 this.send({
                     cmd: "getPlayers",
                     id: data.id
+                });
+            break;
+            case "joinGame":
+                // this.gameID = data.id;
+                // this.parent.setState({
+                //     gameID: data.id,
+                // });
+                // this.send({
+                //     cmd: "getPlayers",
+                //     id: data.id
+                // });
+                this.send({
+                    cmd: "getCards"
+                });
+            break;
+            case "getCards":
+                this.parent.setState({
+                    players: data.players, 
                 });
             break;
             case "getPlayers": 

@@ -11,7 +11,7 @@ export default class Game {
     direction: "left"|"right" = "left";
     
     turnIncrementSize = 1;
-    drawBuffer = 0;
+    drawBuffer = 1;
 
     settings = {
         MUST_DRAW: true,
@@ -37,14 +37,14 @@ export default class Game {
         const player = this.getPlayer(playerID);
         if(this.currentTurn === this._players.indexOf(player) && player)
         {
-            const card = player.play(cardID);
+            const card = player.getCard(cardID);
             if(card?.playable(this.cardStack[0]))
             {
-                if(card)
+                if(player.play(cardID))
                 {
                     this.cardStack.push(card);
+                    return card;
                 }
-                // this.nextTurn();
             }
         }
     }

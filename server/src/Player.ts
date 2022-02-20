@@ -1,6 +1,8 @@
 import uid from "uid-safe";
 import Card from "./Card";
 import Game from "./Game";
+import {Types, Colors} from "./Card";
+import {randomEnumValue} from "./utils";
 
 export default class Player {
     id = uid.sync(18);
@@ -21,8 +23,8 @@ export default class Player {
         let temp;
         for(let i = 0; i < this.parent.drawBuffer; i++)
         {
-            const type = "1"; // TODO: random card type
-            const color = "red"; // TODO: random card type
+            const type = randomEnumValue(Types);
+            const color = randomEnumValue(Colors, 1);
             temp = new Card(type, color, this);
             
             this.cards.push(temp);
@@ -31,6 +33,11 @@ export default class Player {
         this.parent.drawBuffer = 1;
 
         return temp;
+    }
+
+    getCard(cardID)
+    {
+        return this.cards.find(card => card.id === cardID);
     }
 
     removeCard(card)

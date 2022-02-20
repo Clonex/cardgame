@@ -11,6 +11,8 @@ export default class App extends React.Component {
   state = {
     gameID: false,
     playerID: false,
+
+    players: [],
   };
 
   constructor()
@@ -28,8 +30,10 @@ export default class App extends React.Component {
     return (
       <div className="App" key={this.state.gameID}>
         {
-          !this.state.gameID ? <button>Join game</button> : <Game id={this.state.gameID} connection={this.connection} />
-        }
+          !this.state.gameID ? 
+            <button>Join game</button> : 
+            <Game id={this.state.gameID} players={this.state.players} connection={this.connection} />
+        } 
       </div>
     );
   }

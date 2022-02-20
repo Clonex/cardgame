@@ -48,13 +48,61 @@ export default class GameManager {
                 }, conn);
             }
             break;
+            case "getCards":
+            {
+                const player = conn.player;
+                if(player)
+                {
+                    this.trigger("getCards", player.parent);
+                }
+            }
+            break;
+            case "playCard":
+            {
+                const player = conn.player;
+                if(player)
+                {
+                    const card = player.parent.play(player.id, data.cardID);
+                    
+                    if(card)
+                    {
+                        this.trigger("getCards", player.parent);
+                        this.trigger("playCard", player.parent, {
+                            type: card.type,
+                            color: card.color,
+                            playerID: player.id,
+                        });
+                    }
+                }
+            }
+            break;
+            case "endTurn":
+            {
+                const player = conn.player;
+                if(player)
+                {
+                    player.parent.endTurn();
+                    this.trigger("getCards", player.parent);
+                }
+            }
+            break;
+            case "drawCard":
+            {
+                const player = conn.player;
+                if(player && player.parent.currentPlayer === player)
+                {
+                    player.drawCard();
+                    this.trigger("getCards", player.parent);
+                }
+            }
+            break;
             case "joinGame":
             {
                 const game = this.getGame(data.gameID);
                 if(game)
                 {
                     const player = game.getPlayer(data.playerID);
-                    console.log("Joining!", player);
+                    // console.log("Joining!", player);
                     if(player && !player.connection)
                     {
                         player.connection = conn;
@@ -97,8 +145,42 @@ export default class GameManager {
         }
     }
 
+    trigger(type, game, extra?: any)
+    {
+        const send = data => game._players.forEach(player => this.send(data, player.connection));
+        switch(type)
+        {
+            case "playCard":
+                send({
+                    cmd: "playCard",
+                    ...extra
+                })
+            break;
+            case "getCards":
+                game._players.forEach(player => {
+                    this.send({
+                        cmd: type,
+                        players: game._players.map(p => ({
+                            id: p.id,
+                            cards: p.cards.map(card => player.id === p.id ? ({
+                                id: card.id,
+                                type: card.type,
+                                color: card.color,
+                            }) : ({
+                                id: card.id,
+                            }))
+                        }))
+                    }, player.connection);
+                });
+            break;
+        }
+    }
+
     send(data, conn)
     {
-        conn.send(JSON.stringify(data));
+        if(conn)
+        {
+            conn.send(JSON.stringify(data));
+        }
     }
 }

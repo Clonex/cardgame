@@ -1,0 +1,9 @@
+.card {
+    width: 120px;
+    margin-right: 10px;
+    &:hover {
+        box-shadow: 0px 0px 20px 0px #0000004d;
+        z-index: 99;
+        cursor: pointer;
+    }
+}
