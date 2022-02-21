@@ -2,9 +2,17 @@ import Player from "./Player";
 export default function Game(props)
 {
     return (<div>
+        <div className="players">
         {
-            props.players.map(player => <Player cards={player.cards} id={player.id} connection={props.connection} />)
+            props.players.map((player, i) => <Player
+                cards={player.cards}
+                id={player.id}
+                i={i}
+                totalPlayers={props.players.length}
+                connection={props.connection}
+            />)
         }
+        </div>
 
         <button onClick={() => props.connection.send({cmd: "drawCard"})}>
             Draw card

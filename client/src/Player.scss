@@ -1,9 +1,61 @@
-.card {
-    width: 120px;
-    margin-right: 10px;
-    &:hover {
-        box-shadow: 0px 0px 20px 0px #0000004d;
-        z-index: 99;
-        cursor: pointer;
+
+
+.players {
+    // position:relative;
+    // width:5%;
+    // padding-bottom:50%;
+    // margin-left:47.5%;
+
+    // .player {
+    //     position:absolute;
+    //     top:0; left:0;
+    //     width:100%; height:100%;
+    //     -webkit-transform : rotate(24deg);
+    //     -ms-transform : rotate(24deg);
+    //     transform : rotate(24deg);
+    // }
+
+    // &::before, .player:before {
+    //     content:'';
+    //     position:absolute;
+    //     top:0; 
+    //     left:0;
+    //     width:100%; padding-bottom:100%;
+    //     border-radius: 100%;
+    //     border: 2px solid teal;
+    //     background:gold;
+    // }
+    .player {
+        position: absolute;
+        &.me {
+            width: 100%;
+            top: initial !important;
+            left: 0px !important;
+            bottom: 80px;
+            // display: flex;
+            .cards {
+                width: 100%;
+                max-width: 100vw;
+                overflow: auto;
+                display: flex;
+                justify-content: center;
+
+                .card {
+                    margin-left: -45px;
+                }
+            }
+        }
+        .card {
+            width: 120px;
+            // margin-right: 10px;
+            margin-left: -90px;
+            float: left;
+            // position: absolute;
+            &:hover {
+                box-shadow: 0px 0px 20px 0px #0000004d;
+                z-index: 99;
+                cursor: pointer;
+            }
+        }
     }
 }

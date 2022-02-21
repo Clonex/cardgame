@@ -36,19 +36,31 @@ function getImage(color, type)
 export default function Player(props)
 {
     console.log("Player", props.cards);
-    return (<div>
+    const step = (2*Math.PI) / props.totalPlayers;
+    // const x = Math.round((100 * Math.cos(props.i*(2*Math.PI/15))));
+    const x = Math.round(20 * Math.cos(step * props.i)) + 25;
+    const IS_MINE = props.cards?.[0].color;
+    const CARD_PADDING = IS_MINE ? 80 : 10;
+    return (<div className={"player" + (IS_MINE ? " me" : "")} style={{left: `${x}vw`, top: `${x}vh`}}>
         PLAYER
-        {
-            props.cards.map(card => <img 
-                className="card" 
-                src={getImage(card.color, card.type)} 
-                onClick={() => props.connection.send({
-                    cmd: "playCard",
-                    // playerID: props.id, 
-                    cardID: card.id,
-                })} 
-                key={card.id}
-            />)
-        }
+        <div className="cards">
+            {
+                props.cards.map((card, i) => <img 
+                    className="card" 
+                    src={getImage(card.color, card.type)} 
+                    // style={{marginLeft: `${i * CARD_PADDING}px`}}
+                    onDragStart={e => {
+                        e.preventDefault();
+                        e.target.click();
+                    }}
+                    onClick={() => props.connection.send({
+                        cmd: "playCard",
+                        // playerID: props.id, 
+                        cardID: card.id,
+                    })} 
+                    key={card.id}
+                />)
+            }
+        </div>
     </div>);
 }
