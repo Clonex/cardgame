@@ -18,12 +18,12 @@ const types = {
     PLUS4: "wild_pick_four"
 };
 
-function getImage(color, type)
+export function getImage(color, type)
 {
-    let ret = "images/cards/large/card_back_alt_large.png";
+    let ret = "/images/cards/large/card_back_alt_large.png";
     if(color)
     {
-        ret = "images/cards/large/";
+        ret = "/images/cards/large/";
         if(type !== "PLUS4" && type !== "wild")
         {
             ret += `${color}_`;

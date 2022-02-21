@@ -1,12 +1,14 @@
 export default class ConnectionHandler {
     ws = new WebSocket("ws://localhost:8080");
     gameID = false;
+    onReady = () => {};
+
     constructor(parent)
     {
         this.parent = parent;
 
         this.ws.onopen = () => {
-            this.send({cmd: "startGame"});
+            this.onReady();
             setInterval(() =>  this.send({cmd: "ping"}), 1000 * 60 * 2);
         };
         this.ws.onmessage = data => this.onData(data);
@@ -38,6 +40,10 @@ export default class ConnectionHandler {
                 //     cmd: "getPlayers",
                 //     id: data.id
                 // });
+                if(!data.id)
+                {
+                    window.location = "/";
+                }
                 this.send({
                     cmd: "getCards"
                 });
@@ -45,6 +51,11 @@ export default class ConnectionHandler {
             case "getCards":
                 this.parent.setState({
                     players: data.players, 
+                });
+            break;
+            case "cardStack":
+                this.parent.setState({
+                    cardStack: data.stack, 
                 });
             break;
             case "getPlayers": 

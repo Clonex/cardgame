@@ -1,4 +1,4 @@
-import Player from "./Player";
+import Player, {getImage} from "./Player";
 export default function Game(props)
 {
     return (<div>
@@ -12,6 +12,12 @@ export default function Game(props)
                 connection={props.connection}
             />)
         }
+        </div>
+
+        <div className="cardStack">
+            {
+                props.cardStack.map((card, i) => <img src={getImage(card.color, card.type)} key={i} />)
+            }
         </div>
 
         <button onClick={() => props.connection.send({cmd: "drawCard"})}>

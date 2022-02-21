@@ -67,6 +67,7 @@ export default class GameManager {
                     if(card)
                     {
                         this.trigger("getCards", player.parent);
+                        this.trigger("cardStack", player.parent);
                         this.trigger("playCard", player.parent, {
                             type: card.type,
                             color: card.color,
@@ -112,7 +113,13 @@ export default class GameManager {
                             cmd: data.cmd,
                             id: player.id,
                         }, conn);
+                        this.trigger("cardStack", player.parent);
                     }
+                }else{
+                    this.send({
+                        cmd: data.cmd,
+                        id: false,
+                    }, conn);
                 }
             }
             break;
@@ -145,7 +152,7 @@ export default class GameManager {
         }
     }
 
-    trigger(type, game, extra?: any)
+    trigger(type, game: Game, extra?: any)
     {
         const send = data => game._players.forEach(player => this.send(data, player.connection));
         switch(type)
@@ -155,6 +162,15 @@ export default class GameManager {
                     cmd: "playCard",
                     ...extra
                 })
+            break;
+            case "cardStack":
+                send({
+                    cmd: type,
+                    stack: game.cardStack.map(card => ({
+                        type: card.type,
+                        color: card.color,
+                    })),
+                });
             break;
             case "getCards":
                 game._players.forEach(player => {
