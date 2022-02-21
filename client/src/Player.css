@@ -1,12 +1,28 @@
+.logo {
+  font-size: 40px;
+  font-weight: bolder;
+  color: #FFF;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  opacity: 0.2;
+}
+
 .players .player {
   position: absolute;
+  left: 50vw;
+  top: 420px;
 }
 
 .players .player.me {
   width: 100%;
+  margin-left: initial !important;
   top: initial !important;
   left: 0px !important;
-  bottom: 80px;
+  bottom: 40px;
+  -webkit-transform: initial !important;
+          transform: initial !important;
+  z-index: 9999;
 }
 
 .players .player.me .cards {

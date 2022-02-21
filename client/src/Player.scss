@@ -1,4 +1,17 @@
+.logo {
+    font-size: 40px;
+    font-weight: bolder;
+    color: #FFF;
+    position: absolute;
+    right: 10px;
+    top: 10px;
 
+
+    opacity: 0.2;
+//     background: -webkit-linear-gradient(147deg, #FF2525 0%, #FFE53B 74%);
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+}
 
 .players {
     // position:relative;
@@ -27,11 +40,17 @@
     // }
     .player {
         position: absolute;
+        left: 50vw;
+        // margin-left: -150px;
+        top: 420px;
         &.me {
             width: 100%;
+            margin-left: initial !important;
             top: initial !important;
             left: 0px !important;
-            bottom: 80px;
+            bottom: 40px;
+            transform: initial !important;
+            z-index:  9999;;
             // display: flex;
             .cards {
                 width: 100%;

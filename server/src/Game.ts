@@ -17,7 +17,7 @@ export default class Game {
         MUST_DRAW: true,
     };
 
-    constructor(players = 3, startingCards = 6)
+    constructor(players = 6, startingCards = 6)
     {
         for(let i = 0; i < players; i++)
         {

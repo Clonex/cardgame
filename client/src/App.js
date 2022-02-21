@@ -29,6 +29,7 @@ export default class App extends React.Component {
   {
     return (
       <div className="App" key={this.state.gameID}>
+        <div className="logo">LOGO</div>
         {
           !this.state.gameID ? 
             <button>Join game</button> : 
