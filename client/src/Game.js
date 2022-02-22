@@ -3,10 +3,16 @@ import {getImage} from "./utils";
 
 export default function Game(props)
 {
+    if(props.players.length === 0)
+    {
+        return null;
+    }
+    const me = props.players.find(player => player.cards?.[0].color);
+    console.log("Hmmmm", props.players);
     return (<div>
-        <div className="players">
+        <div className="players" style={{"--players": props.players.length - 1}}>
         {
-            props.players.map((player, i) => <Player
+            props.players.map((player, i) => player.id !== me.id && <Player
                 cards={player.cards}
                 id={player.id}
                 i={i}
@@ -14,6 +20,15 @@ export default function Game(props)
                 connection={props.connection}
             />)
         }
+        </div>
+        <div className="myPlayer">
+            <Player
+                cards={me.cards}
+                id={me.id}
+                i={0}
+                totalPlayers={props.players.length}
+                connection={props.connection}
+            />
         </div>
 
         <div className="cardStack">

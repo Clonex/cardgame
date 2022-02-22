@@ -9,6 +9,16 @@ body {
   height: 100vh;
 }
 
+.logo {
+  font-size: 40px;
+  font-weight: bolder;
+  color: #FFF;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  opacity: 0.2;
+}
+
 .cardStack {
   position: absolute;
   bottom: 430px;

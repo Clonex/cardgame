@@ -48,7 +48,7 @@ export default class App extends React.Component {
   startGame()
   {
     
-    this.connection.send({cmd: "startGame", size: 2});
+    this.connection.send({cmd: "startGame", size: 1});
   }
   
   render()
@@ -68,7 +68,7 @@ export default class App extends React.Component {
           </Route>
 
           
-          <Route path="/">
+          <Route>
             <button onClick={() => this.startGame()}>Start game</button> 
             {
               this.state.gameID && <Redirect to={"/game/" + this.state.gameID} />

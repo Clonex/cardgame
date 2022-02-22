@@ -1,16 +1,23 @@
-.logo {
-    font-size: 40px;
-    font-weight: bolder;
-    color: #FFF;
+
+
+.myPlayer {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    bottom: 10px;
+    width: 100vw;
+    .player {
+        .cards {
+            width: 100%;
+            max-width: 100vw;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
 
-
-    opacity: 0.2;
-//     background: -webkit-linear-gradient(147deg, #FF2525 0%, #FFE53B 74%);
-//   -webkit-background-clip: text;
-//   -webkit-text-fill-color: transparent;
+            .card {
+                margin-left: -45px;
+                width: 150px;
+            }
+        }
+    }
 }
 
 .players {
@@ -37,44 +44,71 @@
     //     border-radius: 100%;
     //     border: 2px solid teal;
     //     background:gold;
-    // }
+    // } 
+    display: block;
+    position: absolute;
+    top:  50%; 
+    left: 50%;
+    --rot-size: calc(240 / var(--players));
+    // transform: rotate(10deg);
+
+    
     .player {
         position: absolute;
-        left: 50vw;
-        // margin-left: -150px;
-        top: 420px;
-        &.me {
-            width: 100%;
-            margin-left: initial !important;
-            top: initial !important;
-            left: 0px !important;
-            bottom: 40px;
-            transform: initial !important;
-            z-index:  9999;;
-            // display: flex;
-            .cards {
-                width: 100%;
-                max-width: 100vw;
-                overflow: auto;
-                display: flex;
-                justify-content: center;
+        // width: 500px;
+        
+        // left: calc(100px * var(--i));
+        --angle: calc(var(--rot-size) * var(--i) * 1deg + 165deg);
+        // rotate($rot * 1deg) 
+        // width: calc(100px * attr(data-x number, 1));
+    // background: #f00;
+        // left 
+        left: -100px;
+        top: -100px;
+        transform: rotate(var(--angle)) translate(calc(min(80vw, 80vh) / 2)) rotate(calc(var(--angle) * -1));
+        // left: calc(100px * attr(data-i number, 1));
 
-                .card {
-                    margin-left: -45px;
-                }
-            }
-        }
+        // left: 50vw;
+        // // margin-left: -150px;
+        // top: 420px;
+        // &.me {
+        //     width: 100%;
+        //     margin-left: initial !important;
+        //     top: initial !important;
+        //     left: 0px !important;
+        //     bottom: 40px;
+        //     transform: initial !important;
+        //     z-index:  9999;;
+        //     // display: flex;
+        //     .cards {
+        //         width: 100%;
+        //         max-width: 100vw;
+        //         overflow: auto;
+        //         display: flex;
+        //         justify-content: center;
+
+        //         .card {
+        //             margin-left: -45px;
+        //         }
+        //     }
+        // }
+
         .card {
-            width: 120px;
-            // margin-right: 10px;
-            margin-left: -90px;
-            float: left;
-            // position: absolute;
-            &:hover {
-                box-shadow: 0px 0px 20px 0px #0000004d;
-                z-index: 99;
-                cursor: pointer;
-            }
+            position: absolute;
+            display: flex;
         }
+        
+    }
+}
+.card {
+    width: 120px;
+    // margin-right: 10px;
+    // margin-left: -90px;
+    float: left;
+    // position: absolute;
+    &:hover {
+        box-shadow: 0px 0px 20px 0px #0000004d;
+        z-index: 99;
+        cursor: pointer;
     }
 }

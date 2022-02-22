@@ -1,4 +1,4 @@
-export const SERVER_IP = process.env.NODE_ENV === "production" ? "cardgame-three.vercel.app:8080" : "localhost:8080";
+export const SERVER_IP = process.env.NODE_ENV === "production" ? "wss://cardgame-three.vercel.app:8080" : "ws://localhost:8080";
 
 export function getImage(color, type)
 {

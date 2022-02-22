@@ -1,7 +1,7 @@
 import {SERVER_IP} from "./utils";
 
 export default class ConnectionHandler {
-    ws = new WebSocket("ws://" + SERVER_IP);
+    ws = new WebSocket(SERVER_IP);
     gameID = false;
     onReady = () => {};
 

@@ -31,7 +31,7 @@ export default class GameManager {
 
             player.connection = false;
             player.inactive();
-            this.trigger("getCards", player);
+            this.trigger("getCards", player.parent);
         }
     }
 
