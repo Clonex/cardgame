@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "./static/css/main.9db671fa.css",
-    "main.js": "./static/js/main.c71d2ff9.js",
-    "static/js/787.c4e7f8f9.chunk.js": "./static/js/787.c4e7f8f9.chunk.js",
-    "index.html": "./index.html",
-    "main.9db671fa.css.map": "./static/css/main.9db671fa.css.map",
-    "main.c71d2ff9.js.map": "./static/js/main.c71d2ff9.js.map",
-    "787.c4e7f8f9.chunk.js.map": "./static/js/787.c4e7f8f9.chunk.js.map"
+    "main.css": "/cardgame/static/css/main.9db671fa.css",
+    "main.js": "/cardgame/static/js/main.42c9c28f.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/cardgame/static/js/787.c4e7f8f9.chunk.js",
+    "index.html": "/cardgame/index.html",
+    "main.9db671fa.css.map": "/cardgame/static/css/main.9db671fa.css.map",
+    "main.42c9c28f.js.map": "/cardgame/static/js/main.42c9c28f.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/cardgame/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9db671fa.css",
-    "static/js/main.c71d2ff9.js"
+    "static/js/main.42c9c28f.js"
   ]
 }
