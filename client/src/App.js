@@ -51,6 +51,7 @@ export default class App extends React.Component {
   
   render()
   {
+    console.log(process.env);
     return (
       <div className="App" key={this.state.gameID}>
         <div className="logo">LOGO</div>
