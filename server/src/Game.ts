@@ -6,6 +6,7 @@ export default class Game {
     id = uid.sync(18);
     currentTurn: number = 0;
     _players: Player[] = [];
+    _inactivePlayers = [];
     cardStack: Card[] = [];
 
     direction: "left"|"right" = "left";
@@ -17,20 +18,29 @@ export default class Game {
         MUST_DRAW: true,
     };
 
+    _startingCards = 6;
+
     constructor(players = 6, startingCards = 6)
     {
+        this._startingCards = startingCards;
         for(let i = 0; i < players; i++)
         {
-            const temp = new Player(this);
-            this._players.push(temp);
-
-            for(let j = 0; j < startingCards; j++)
-            {
-                temp.drawCard();
-            }
+            this.addPlayer();
         }
     }
 
+    addPlayer()
+    {
+        const temp = new Player(this);
+        this._players.push(temp);
+
+        for(let j = 0; j < this._startingCards; j++)
+        {
+            temp.drawCard();
+        }
+
+        return temp;
+    }
 
     play(playerID, cardID)
     {
@@ -49,9 +59,10 @@ export default class Game {
         }
     }
 
-    getPlayer(playerID)
+    getPlayer(playerID, inactive = false)
     {
-        return this._players.find(player => player.id === playerID);
+        const target = inactive ? this._inactivePlayers : this._players;
+        return target.find(player => player.id === playerID);
     }
 
     endTurn()

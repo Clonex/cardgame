@@ -45,6 +45,26 @@ export default class Player {
         this.cards = this.cards.filter(d => d !== card);
     }
 
+    inactive()
+    {
+        if(this.parent._players.some(player => player.id === this.id))
+        {
+            const currPlayer = this.parent.currentPlayer;
+            this.parent._players = this.parent._players.filter(player => player.id !== this.id);
+            this.parent.currentTurn = this.parent._players.findIndex(player => currPlayer.id === player.id);
+            this.parent._inactivePlayers.push(this);
+        }
+    }
+
+    activate()
+    {
+        if(this.parent._inactivePlayers.some(player => player.id === this.id))
+        {
+            this.parent._inactivePlayers = this.parent._inactivePlayers.filter(player => player.id !== this.id);
+            this.parent._players.push(this);
+        }
+    }
+
     turnReset()
     {
         this.didPlay = false;

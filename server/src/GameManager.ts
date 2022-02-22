@@ -27,7 +27,11 @@ export default class GameManager {
         console.log("Kill connection", conn.player);
         if(conn.player)
         {
-            conn.player.connection = false;
+            const player = conn.player;
+
+            player.connection = false;
+            player.inactive();
+            this.trigger("getCards", player);
         }
     }
 
@@ -102,12 +106,17 @@ export default class GameManager {
                 const game = this.getGame(data.gameID);
                 if(game)
                 {
-                    const player = game.getPlayer(data.playerID);
-                    // console.log("Joining!", player);
+                    let player = game.getPlayer(data.playerID, true);
+                    if(!player) // playerID not found, add it
+                    {
+                        player = game.addPlayer();
+                    }
+                    
                     if(player && !player.connection)
                     {
                         player.connection = conn;
                         conn.player = player;
+                        player.activate();
 
                         this.send({
                             cmd: data.cmd,
