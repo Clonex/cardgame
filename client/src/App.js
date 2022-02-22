@@ -5,6 +5,8 @@ import { Link, Route, Redirect } from "wouter";
 import Game from "./Game";
 import ConnectionHandler from './ConnectionHandler';
 
+import {SERVER_IP} from "./utils";
+
 import './App.css';
 
 export default class App extends React.Component {
@@ -51,7 +53,7 @@ export default class App extends React.Component {
   
   render()
   {
-    console.log(process.env);
+    console.log(process.env, SERVER_IP);
     return (
       <div className="App" key={this.state.gameID}>
         <div className="logo">LOGO</div>
