@@ -1,4 +1,6 @@
-import Player, {getImage} from "./Player";
+import Player from "./Player";
+import {getImage} from "./utils";
+
 export default function Game(props)
 {
     return (<div>
