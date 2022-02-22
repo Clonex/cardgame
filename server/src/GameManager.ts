@@ -107,7 +107,7 @@ export default class GameManager {
                 if(game)
                 {
                     let player = game.getPlayer(data.playerID, true);
-                    if(!player) // playerID not found, add it
+                    if(!player) // Player not found, add it
                     {
                         player = game.addPlayer();
                     }
