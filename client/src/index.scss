@@ -14,6 +14,10 @@ background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
   height: 100vh;
 
 }
+.settings {
+  position: relative;
+  z-index: 99;
+}
 
 .logo {
   font-size: 40px;

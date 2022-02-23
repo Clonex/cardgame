@@ -95,7 +95,7 @@ export default class GameManager {
             case "drawCard":
             {
                 const player = conn.player;
-                if(player && player.parent.currentPlayer === player)
+                if(player && player.parent.currentPlayer === player && !player.didDraw)
                 {
                     player.drawCard();
                     this.trigger("getCards", player.parent);

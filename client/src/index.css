@@ -9,6 +9,11 @@ body {
   height: 100vh;
 }
 
+.settings {
+  position: relative;
+  z-index: 99;
+}
+
 .logo {
   font-size: 40px;
   font-weight: bolder;

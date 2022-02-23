@@ -36,6 +36,10 @@
         .card {
             position: absolute;
             display: flex;
+            margin-left: calc(15px * var(--i));
+
+            --angle: min(calc(var(--i) * 0.5deg), 20deg);
+            transform: rotate(var(--angle));
         }
     }
 }

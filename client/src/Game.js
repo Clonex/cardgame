@@ -9,7 +9,7 @@ export default function Game(props)
     }
     const me = props.players.find(player => player.cards?.[0].color);
     return (<div>
-        <div className="players" style={{"--players": props.players.length - 2}} key={props.players.length}>
+        <div className="players" style={{"--players": props.players.length - 1}} key={props.players.length}>
         {
             props.players.map((player, i) => player.id !== me.id && <Player
                 cards={player.cards}
@@ -39,12 +39,16 @@ export default function Game(props)
             }
         </div>
 
-        <button onClick={() => props.connection.send({cmd: "drawCard"})}>
-            Draw card
-        </button>
+        {
+            me.id === props.currentTurn && <div className="settings">
+                <button onClick={() => props.connection.send({cmd: "drawCard"})}>
+                    Draw card
+                </button>
 
-        <button onClick={() => props.connection.send({cmd: "endTurn"})}>
-            End turn
-        </button>
+                <button onClick={() => props.connection.send({cmd: "endTurn"})}>
+                    End turn
+                </button>
+            </div>
+        }
     </div>);
 }
