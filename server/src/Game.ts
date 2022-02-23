@@ -48,7 +48,7 @@ export default class Game {
         if(this.currentTurn === this._players.indexOf(player) && player)
         {
             const card = player.getCard(cardID);
-            if(card?.playable(this.cardStack[0]))
+            if(card?.playable(this.cardStack[this.cardStack.length - 1]))
             {
                 if(player.play(cardID))
                 {
@@ -59,7 +59,7 @@ export default class Game {
         }
     }
 
-    getPlayer(playerID, inactive = false)
+    getPlayer(playerID, inactive = false): Player|undefined
     {
         const target = inactive ? this._inactivePlayers : this._players;
         return target.find(player => player.id === playerID);

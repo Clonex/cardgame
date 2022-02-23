@@ -35,7 +35,7 @@ export default class Player {
         return temp;
     }
 
-    getCard(cardID)
+    getCard(cardID):Card|undefined
     {
         return this.cards.find(card => card.id === cardID);
     }

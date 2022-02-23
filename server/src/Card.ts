@@ -77,8 +77,14 @@ export default class Card {
 
     playable(lastCard?: Card)
     {
+        if(lastCard)
+        {
+
+            console.log(lastCard.type, "===", this.type);
+        }
         return  !lastCard ||    // Empty draw pile
                 !(this.parent.parent.drawBuffer > 0 && lastCard.type !== this.type) || // Player can only put down a +1/+4 card if there is something in drawBuffer
-                lastCard.type === this.type; // Last card has same type as current
+                lastCard.type === this.type || // Last card has same type as current
+                (lastCard.color === this.color && !this.parent.didPlay); // Last card has same color as current
     }
 }
