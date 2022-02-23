@@ -8,7 +8,9 @@ export default function Player(props)
 
     const IS_MINE = props.cards?.[0].color;
     return (<div className={"player" + (IS_MINE ? " me" : "")} style={{"--i": props.totalPlayers === 2 ? 0.5 : props.i}}>
-        PLAYER
+        <div className={"player-title " + (props.highlight ? "turn" : "")}>
+            PLAYER {props.i + 1}
+        </div>
         <div className="cards">
             {
                 props.cards.map((card, i) => <img 

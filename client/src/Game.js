@@ -8,16 +8,17 @@ export default function Game(props)
         return null;
     }
     const me = props.players.find(player => player.cards?.[0].color);
-    console.log("Hmmmm", props.players);
     return (<div>
-        <div className="players" style={{"--players": props.players.length - 1}}>
+        <div className="players" style={{"--players": props.players.length - 2}} key={props.players.length}>
         {
             props.players.map((player, i) => player.id !== me.id && <Player
                 cards={player.cards}
                 id={player.id}
                 i={i}
+                highlight={player.id === props.currentTurn}
                 totalPlayers={props.players.length}
                 connection={props.connection}
+                key={player.id}
             />)
         }
         </div>
@@ -25,6 +26,7 @@ export default function Game(props)
             <Player
                 cards={me.cards}
                 id={me.id}
+                highlight={me.id === props.currentTurn}
                 i={0}
                 totalPlayers={props.players.length}
                 connection={props.connection}

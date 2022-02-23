@@ -20,7 +20,7 @@ export default class Game {
 
     _startingCards = 6;
 
-    constructor(players = 6, startingCards = 6)
+    constructor(players = 0, startingCards = 6)
     {
         this._startingCards = startingCards;
         for(let i = 0; i < players; i++)

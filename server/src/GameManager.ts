@@ -24,14 +24,15 @@ export default class GameManager {
 
     killConnection(conn)
     {
-        console.log("Kill connection", conn.player);
         if(conn.player)
         {
             const player = conn.player;
-
+            conn.player = false;
             player.connection = false;
             player.inactive();
             this.trigger("getCards", player.parent);
+        }else{
+            console.log("Player not found!!");
         }
     }
 
@@ -185,6 +186,7 @@ export default class GameManager {
                 game._players.forEach(player => {
                     this.send({
                         cmd: type,
+                        currentTurn: game.currentPlayer?.id,
                         players: game._players.map(p => ({
                             id: p.id,
                             cards: p.cards.map(card => player.id === p.id ? ({

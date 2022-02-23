@@ -24,14 +24,19 @@ export default class ConnectionHandler {
         switch(data.cmd)
         {
             case "startGame":
-                // this.gameID = data.id;
+                this.gameID = data.id;
                 this.parent.setState({
                     gameID: data.id,
                 });
                 this.send({
-                    cmd: "getPlayers",
-                    id: data.id
+                    cmd: "joinGame",
+                    gameID: data.id,
+                    playerID: false
                 });
+                // this.send({
+                //     cmd: "getPlayers",
+                //     id: data.id
+                // });
             break;
             case "joinGame":
                 // this.gameID = data.id;
@@ -45,14 +50,16 @@ export default class ConnectionHandler {
                 if(!data.id)
                 {
                     window.location = "/";
+                }else{
+                    this.send({
+                        cmd: "getCards"
+                    });
                 }
-                this.send({
-                    cmd: "getCards"
-                });
             break;
             case "getCards":
                 this.parent.setState({
                     players: data.players, 
+                    currentTurn: data.currentTurn, 
                 });
             break;
             case "cardStack":
@@ -61,22 +68,32 @@ export default class ConnectionHandler {
                 });
             break;
             case "getPlayers": 
-                if(!this.parent.state.playerID)
-                {
-                    const player = data.players.find(player => player.open);
-                    console.log("New player", player);
-                    if(player)
-                    {
-                        this.parent.setState({
-                            playerID: player.id,
-                        });
-                        this.send({
-                            cmd: "joinGame",
-                            gameID: this.parent.state.gameID,
-                            playerID: player.id
-                        });
-                    }
-                }
+                // if(!this.parent.state.playerID)
+                // {
+                //     const player = data.players.find(player => player.open);
+                //     console.log("New player", player);
+                //     if(player)
+                //     {
+                //         this.parent.setState({
+                //             playerID: player.id,
+                //         });
+                //         if(!this.gameID)
+                //         {
+                //             this.send({
+                //                 cmd: "joinGame",
+                //                 gameID: this.parent.state.gameID,
+                //                 playerID: player.id
+                //             });
+                //         }
+                //     }else{
+                //         this.send({
+                //             cmd: "joinGame",
+                //             gameID: this.parent.state.gameID,
+                //             playerID: false
+                //         });
+                //     }
+                //     this.gameID = data.id;
+                // }
             break;
         }
         console.log("Got something", data);

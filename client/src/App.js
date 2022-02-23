@@ -17,6 +17,7 @@ export default class App extends React.Component {
 
     players: [],
     cardStack: [],
+    currentTurn: false,
   };
 
   constructor()
@@ -37,10 +38,10 @@ export default class App extends React.Component {
           gameID,
         });
 
-        this.connection.send({
-            cmd: "getPlayers",
-            id: gameID
-        });
+        // this.connection.send({
+        //     cmd: "getPlayers",
+        //     id: gameID
+        // });
       }
     };
   }
@@ -48,7 +49,7 @@ export default class App extends React.Component {
   startGame()
   {
     
-    this.connection.send({cmd: "startGame", size: 1});
+    this.connection.send({cmd: "startGame", size: 0});
   }
   
   render()
@@ -64,7 +65,13 @@ export default class App extends React.Component {
         }  */}
 
           <Route path="/game/:gameID">
-            {(params) => <Game id={params.gameID} players={this.state.players} cardStack={this.state.cardStack} connection={this.connection} />}                     
+            {(params) => <Game
+              id={params.gameID}
+              players={this.state.players}
+              currentTurn={this.state.currentTurn}
+              cardStack={this.state.cardStack}
+              connection={this.connection}
+            />}                     
           </Route>
 
           

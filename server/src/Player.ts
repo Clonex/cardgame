@@ -51,7 +51,7 @@ export default class Player {
         {
             const currPlayer = this.parent.currentPlayer;
             this.parent._players = this.parent._players.filter(player => player.id !== this.id);
-            this.parent.currentTurn = this.parent._players.findIndex(player => currPlayer.id === player.id);
+            this.parent.currentTurn = currPlayer.id === this.id ? this.parent.currentTurn : this.parent._players.findIndex(player => currPlayer.id === player.id);
             this.parent._inactivePlayers.push(this);
         }
     }

@@ -26,7 +26,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  --rot-size: calc(240 / var(--players));
+  --rot-size: calc(212 / var(--players));
 }
 
 .players .player {
@@ -43,6 +43,17 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.player-title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.player-title.turn {
+  font-weight: bolder;
+  text-decoration: underline;
 }
 
 .card {
