@@ -21,7 +21,7 @@ export default function Player(props)
     };
 
     const NAME = uniqueNamesGenerator({
-        dictionaries: [adjectives, colors, animals],
+        dictionaries: [adjectives, animals],
         separator: ' ',
         seed: props.id,
       });
