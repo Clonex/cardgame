@@ -42,7 +42,7 @@ export default class Game {
         return temp;
     }
 
-    play(playerID, cardID)
+    play(playerID, cardID, color)
     {
         const player = this.getPlayer(playerID);
         if(this.currentTurn === this._players.indexOf(player) && player)
@@ -50,7 +50,7 @@ export default class Game {
             const card = player.getCard(cardID);
             if(card?.playable(this.cardStack[this.cardStack.length - 1]))
             {
-                if(player.play(cardID))
+                if(player.play(cardID, color))
                 {
                     this.cardStack.push(card);
                     return card;

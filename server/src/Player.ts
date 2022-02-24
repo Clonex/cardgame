@@ -71,10 +71,10 @@ export default class Player {
         this.didDraw = false;
     }
 
-    play(cardID)
+    play(cardID, color)
     {
         const card = this.cards.find(card => card.id === cardID);
-        card?.play(this.parent);
+        card?.play(this.parent, color);
 
         this.didPlay = true;
 

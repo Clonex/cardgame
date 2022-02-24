@@ -67,7 +67,7 @@ export default class GameManager {
                 const player = conn.player;
                 if(player)
                 {
-                    const card = player.parent.play(player.id, data.cardID);
+                    const card = player.parent.play(player.id, data.cardID, data.color);
                     
                     if(card)
                     {

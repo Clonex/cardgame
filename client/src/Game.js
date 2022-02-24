@@ -1,5 +1,5 @@
 import Player from "./Player";
-import {getImage} from "./utils";
+import {getImage, PICKER_TYPES} from "./utils";
 
 export default function Game(props)
 {
@@ -35,7 +35,12 @@ export default function Game(props)
 
         <div className="cardStack">
             {
-                props.cardStack.map((card, i) => <img src={getImage(card.color, card.type)} key={i} />)
+                props.cardStack.map((card, i) => {
+                    let bgColor = PICKER_TYPES.includes(card.type) ? "#FFF" : false;
+                    return (<div key={card.id}>
+                        <img src={getImage(card.color, card.type)} />
+                    </div>);
+                })
             }
         </div>
 

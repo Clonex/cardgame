@@ -15,6 +15,8 @@ export function getImage(color, type)
     return ret;
 };
 
+export const PICKER_TYPES = ["PLUS4", "wild"];
+
 export const types = {
     ZERO: "0",
     ONE: "1",
