@@ -86,7 +86,7 @@ export default class App extends React.Component {
             <Route>
               <button onClick={() => this.startGame()}>Start game</button> 
               {
-                this.state.gameID && <Redirect to={"/game/" + this.state.gameID} />
+                this.state.gameID && <Redirect to={process.env.PUBLIC_URL + "/game/" + this.state.gameID} />
               }
             </Route>
           </Switch>
