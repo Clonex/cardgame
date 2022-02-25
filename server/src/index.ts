@@ -1,11 +1,12 @@
 import WebSocket from "ws";
-import http from "http";
+// import http from "http";
 import express from "express";
 
 import GameManager from "./GameManager";
 
-const app = express();
-const server = http.createServer(app);
+const server = express();
+server.use((req, res) => res.sendFile("/", { root: __dirname }))
+// const server = http.createServer(app);
 server.listen(process.env.PORT || 8080);
 
 const wss = new WebSocket.Server({ 
