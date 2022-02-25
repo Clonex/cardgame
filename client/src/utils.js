@@ -2,10 +2,10 @@ export const SERVER_IP = process.env.NODE_ENV === "production" ? "wss://cardapi.
 
 export function getImage(color, type)
 {
-    let ret = "/images/cards/large/card_back_alt_large.png";
+    let ret = process.env.PUBLIC_URL + "/images/cards/large/card_back_alt_large.png";
     if(color)
     {
-        ret = "/images/cards/large/";
+        ret = process.env.PUBLIC_URL + "/images/cards/large/";
         if(type !== "PLUS4" && type !== "wild")
         {
             ret += `${color}_`;
