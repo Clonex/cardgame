@@ -26,9 +26,11 @@ body {
 
 .cardStack {
   position: absolute;
-  bottom: 430px;
+  bottom: 500px;
   left: 50%;
   margin-left: -50px;
+  height: 140px;
+  width: 100px;
 }
 
 .cardStack img {

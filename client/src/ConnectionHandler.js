@@ -67,6 +67,12 @@ export default class ConnectionHandler {
                     cardStack: data.stack, 
                 });
             break;
+            case "playCard":
+                // this.parent.setState({
+                //     cardStack: data.stack, 
+                // });
+                this.parent.animateCard(data.color, data.type, data.playerID);
+            break;
             case "getPlayers": 
                 // if(!this.parent.state.playerID)
                 // {

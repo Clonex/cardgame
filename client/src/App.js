@@ -10,6 +10,7 @@ import {SERVER_IP} from "./utils";
 import './App.css';
 
 export default class App extends React.Component {
+  gameInstance = React.createRef();;
   connection;
   state = {
     gameID: false,
@@ -46,6 +47,11 @@ export default class App extends React.Component {
     };
   }
 
+  animateCard(color, type, playerID)
+  {
+    this.gameInstance.current?.animateCard(color, type, playerID);
+  }
+
   startGame()
   {
     
@@ -55,6 +61,7 @@ export default class App extends React.Component {
   render()
   {
     console.log(process.env, SERVER_IP);
+    
     return (
       <div className="App" key={this.state.gameID}>
         <div className="logo">LOGO</div>
@@ -67,6 +74,7 @@ export default class App extends React.Component {
           <Route path="/game/:gameID">
             {(params) => <Game
               id={params.gameID}
+              ref={this.gameInstance}
               players={this.state.players}
               currentTurn={this.state.currentTurn}
               cardStack={this.state.cardStack}

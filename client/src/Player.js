@@ -1,14 +1,14 @@
-import {useState} from "react";
+import {useState, forwardRef} from "react";
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 
 import {getImage, PICKER_TYPES} from "./utils";
 
 import "./Player.css";
 
-export default function Player(props)
+export default forwardRef((props, ref) =>
 {
     const [showColorPicker, setColorPickerVisibility] = useState(false);
-    console.log("Player", props.cards);
+    // console.log("Player", props.cards);
 
     const setColor = (color) => {
         // console.log("Set color", showColorPicker, color);
@@ -47,7 +47,7 @@ export default function Player(props)
             </div>
         }
         
-        <div className="cards">
+        <div className="cards" ref={ref}>
             {
                 props.cards.map((card, i) => <img 
                     className="card" 
@@ -74,4 +74,4 @@ export default function Player(props)
             }
         </div>
     </div>);
-}
+})

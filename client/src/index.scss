@@ -37,9 +37,11 @@ background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
 
 .cardStack {
   position: absolute;
-  bottom: 430px;
+  bottom: 500px;
   left: 50%;
   margin-left: -50px;
+  height: 140px;
+  width: 100px;
   img {
     position: absolute;
     width: 100px;

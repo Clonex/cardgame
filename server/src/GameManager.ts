@@ -71,13 +71,13 @@ export default class GameManager {
                     
                     if(card)
                     {
-                        this.trigger("getCards", player.parent);
-                        this.trigger("cardStack", player.parent);
                         this.trigger("playCard", player.parent, {
                             type: card.type,
                             color: card.color,
                             playerID: player.id,
                         });
+                        this.trigger("getCards", player.parent);
+                        this.trigger("cardStack", player.parent);
                     }
                 }
             }
