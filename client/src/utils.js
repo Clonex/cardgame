@@ -1,4 +1,4 @@
-export const SERVER_IP = process.env.NODE_ENV === "production" ||1 ? "cardapi.clonex.dk" : "ws://localhost:8080";
+export const SERVER_IP = process.env.NODE_ENV === "production" ? "wss://cardapi.clonex.dk" : "ws://localhost:8080";
 
 export function getImage(color, type)
 {
