@@ -16,9 +16,7 @@ export default class Game extends React.Component {
             const pos = {...player.getBoundingClientRect().toJSON()};
             if(me.id === playerID)
             {
-                console.log("Adjust pos", pos.left);
                 pos.left += window.innerWidth / 2;
-                console.log("Adjusted pos", pos.left);
             }
 
             const posTarget = this.cardStack.getBoundingClientRect();
