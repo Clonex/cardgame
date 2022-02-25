@@ -1,13 +1,20 @@
 import WebSocket from "ws";
-// import http from "http";
-import express from "express";
+import http from "http";
+// import express from "express";
 
 import GameManager from "./GameManager";
 
-const server = express();
-server.use((req, res) => res.sendFile("/", { root: __dirname }))
-// const server = http.createServer(app);
-server.listen(process.env.PORT || 8080);
+const PORT = +process.env.PORT || 80;
+
+const server = http.createServer();
+
+server.listen(PORT, () => {
+    console.log("Server is listening on port " + PORT);
+});
+// const server = express();
+// server.use((req, res) => res.sendFile("/", { root: __dirname }))
+// // const server = http.createServer(app);
+// server.listen(process.env.PORT || 8080);
 
 const wss = new WebSocket.Server({ 
     // port: process.env.PORT || 8080
@@ -20,4 +27,4 @@ wss.on('connection', (ws) => {
     ws.on('close', d => manager.killConnection(ws));
 });
 
-console.log("Started server..");
+// console.log("Started server..");
