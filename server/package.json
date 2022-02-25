@@ -25,8 +25,8 @@
   "dependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/uid-safe": "^2.1.2",
-    "uid-safe": "^2.1.5",
     "ts-node": "^10.5.0",
+    "uid-safe": "^2.1.5",
     "ws": "^8.5.0"
   }
 }
