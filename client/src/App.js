@@ -1,6 +1,6 @@
 // import {useState, useEffect} from "react";
 import React from "react";
-import { Link, Route, Redirect } from "wouter";
+import { Link, Route, Redirect, Switch } from "wouter";
 
 import Game from "./Game";
 import ConnectionHandler from './ConnectionHandler';
@@ -70,25 +70,26 @@ export default class App extends React.Component {
             <button>Join game</button> : 
             <Game id={this.state.gameID} players={this.state.players} connection={this.connection} />
         }  */}
+          <Switch>
+            <Route path={process.env.PUBLIC_URL + "/game/:gameID"}>
+              {(params) => <Game
+                id={params.gameID}
+                ref={this.gameInstance}
+                players={this.state.players}
+                currentTurn={this.state.currentTurn}
+                cardStack={this.state.cardStack}
+                connection={this.connection}
+              />}                     
+            </Route>
 
-          <Route path="/game/:gameID">
-            {(params) => <Game
-              id={params.gameID}
-              ref={this.gameInstance}
-              players={this.state.players}
-              currentTurn={this.state.currentTurn}
-              cardStack={this.state.cardStack}
-              connection={this.connection}
-            />}                     
-          </Route>
-
-          
-          <Route>
-            <button onClick={() => this.startGame()}>Start game</button> 
-            {
-              this.state.gameID && <Redirect to={"/game/" + this.state.gameID} />
-            }
-          </Route>
+            
+            <Route>
+              <button onClick={() => this.startGame()}>Start game</button> 
+              {
+                this.state.gameID && <Redirect to={"/game/" + this.state.gameID} />
+              }
+            </Route>
+          </Switch>
       </div>
     );
   }
