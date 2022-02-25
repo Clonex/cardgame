@@ -12,6 +12,7 @@ body {
 .settings {
   position: relative;
   z-index: 99;
+  display: initial;
 }
 
 .logo {
