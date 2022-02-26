@@ -1,30 +1,18 @@
 import * as PIXI from "pixi.js";
 
 import Card from "./Card";
+import Player from "./Player";
 import State from "../State";
 
 import {draggable, isWithin} from "../utils";
 import {TimedAnimation} from "./animation.js";
 
-export default class Hand extends PIXI.Container {
+export default class Hand extends Player {
     #cards = [];
-    #cardContainer = new PIXI.Container();
-
-    readonly id;
-
-    constructor(id: string)
-    {
-        super();
-
-        this.id = id;
-
-        this.addChild(this.#cardContainer);
-    }
-
 
     setCards(cards)
     {
-        this.#cardContainer.removeChildren();
+        this.cardContainer.removeChildren();
         this.#cards = cards;
 
         this.#cards.forEach((card, i) => {
@@ -49,6 +37,7 @@ export default class Hand extends PIXI.Container {
                 }
             });
             cardElem.on("pointerup", () => {
+                cardElem.alpha = 1;
                 timeout = setTimeout(() => {
                     const {x: startX, y: startY} = cardElem;
                     const diffY = 0 - cardElem.y;
@@ -57,18 +46,17 @@ export default class Hand extends PIXI.Container {
                         cardElem.x = (diffX * progress) + startX;
                         cardElem.y = (diffY * progress) + startY;
                     }, 50);
-                    cardElem.alpha = 1;
                 }, 350);
             });
 
             draggable<Card>(cardElem);
-            this.#cardContainer.addChild(cardElem);
+            this.cardContainer.addChild(cardElem);
         });
     }
 
     #sortCard(card: Card)
     {
-        this.#cardContainer.children.sort((a, b) => {
+        this.cardContainer.children.sort((a, b) => {
             if(a === card)
             {
                 return 1;

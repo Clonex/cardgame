@@ -3,11 +3,13 @@ import * as PIXI from "pixi.js";
 import State from "./State";
 
 import Hand from "./classes/Hand";
+import Player from "./classes/Player";
 import CardStack from "./classes/CardStack";
 
 export default class GamePage extends PIXI.Container {
     readonly cardStack = new CardStack();
     #hand;
+    #players = {};
 
     constructor()
     {
@@ -18,6 +20,30 @@ export default class GamePage extends PIXI.Container {
 
 
         this.addChild(this.cardStack, this.#hand);
+
+        let players = [{
+            id: "10",
+            cards: [{
+                color: "none",
+                type: "none",
+            },{
+                color: "none",
+                type: "none",
+            },{
+                color: "none",
+                type: "none",
+            }],
+        }];
+        for(let i = 0; i < players.length; i++)
+        {
+            const player = players[i];
+            const temp = new Player(player.id);
+            temp.setCards(player.cards);
+            console.log(temp, player);
+
+            this.addChild(temp);
+            
+        }
 
         
         State.events.on("resize", () => this.updatePosition());
