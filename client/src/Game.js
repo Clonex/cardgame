@@ -1,7 +1,9 @@
 import React from "react";
+import ReactDOM from "react-dom";
 
 import Player from "./Player";
-import {getImage, PICKER_TYPES} from "./utils";
+import Card from "./Card";
+import {PICKER_TYPES} from "./utils";
 
 export default class Game extends React.Component {
     players = {};
@@ -23,9 +25,11 @@ export default class Game extends React.Component {
             const container = document.createElement("div");
             container.className = "cardStack";
 
-            const temp = document.createElement("img");
-            temp.src = getImage(color, type);
-            container.appendChild(temp);
+            // const temp = Card.render({type: 0});
+            ReactDOM.render(<Card color={color} type={type} />, container);
+            // const temp = document.createElement("img");
+            // temp.src = getImage(color, type);
+            // container.appendChild(temp);
             
             container.style.position = "absolute";
             container.style.left = pos.left + "px";
@@ -81,10 +85,7 @@ export default class Game extends React.Component {
 
             <div className="cardStack" ref={e => this.cardStack = e}>
                 {
-                    this.props.cardStack.map((card, i) => {
-                        let bgColor = PICKER_TYPES.includes(card.type) ? "#FFF" : false;
-                        return (<img src={getImage(card.color, card.type)} key={card.id} />);
-                    })
+                    this.props.cardStack.map((card, i) => <Card {...card} key={i} />)
                 }
             </div>
 

@@ -3,6 +3,8 @@ import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-
 
 import {getImage, PICKER_TYPES} from "./utils";
 
+import Card from "./Card";
+
 import "./Player.css";
 
 export default forwardRef((props, ref) =>
@@ -49,14 +51,9 @@ export default forwardRef((props, ref) =>
         
         <div className="cards" ref={ref}>
             {
-                props.cards.map((card, i) => <img 
-                    className="card" 
-                    style={{"--i": i}}
-                    src={getImage(card.color, card.type)} 
-                    onDragStart={e => {
-                        e.preventDefault();
-                        e.target.click();
-                    }}
+                props.cards.map((card, i) => <Card 
+                    {...card}
+                    i={i}
                     onClick={() => {
                         if(PICKER_TYPES.includes(card.type))
                         {

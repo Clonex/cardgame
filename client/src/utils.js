@@ -1,19 +1,5 @@
 export const SERVER_IP = process.env.NODE_ENV === "production" || 1 ? "wss://cardapi.clonex.dk" : "ws://localhost:8080";
 
-export function getImage(color, type)
-{
-    let ret = process.env.PUBLIC_URL + "/images/cards/large/card_back_alt_large.png";
-    if(color)
-    {
-        ret = process.env.PUBLIC_URL + "/images/cards/large/";
-        if(type !== "PLUS4" && type !== "wild")
-        {
-            ret += `${color}_`;
-        }
-        ret += `${types[type]}_large.png`;
-    }
-    return ret;
-};
 
 export const PICKER_TYPES = ["PLUS4", "wild"];
 
