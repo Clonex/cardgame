@@ -15,6 +15,7 @@ export function draggable<T extends PIXI.Container>(target: T)
             const {x, y} = e.data.getLocalPosition(target.parent);
             target.x = x - (target.width / 2);
             target.y = y - (target.height / 2);
+            target.emit("moved");
         }
     });
 

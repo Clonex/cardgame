@@ -19,8 +19,6 @@ export default class Hand extends PIXI.Container {
         this.id = id;
 
         this.addChild(this.#cardContainer);
-        State.events.on("resize", () => this.updatePosition());
-        this.updatePosition();
     }
 
     setCards(cards)
@@ -29,7 +27,7 @@ export default class Hand extends PIXI.Container {
         this.#cards = cards;
 
         this.#cards.forEach((card, i) => {
-            const cardElem = new Card(0, 0, true);
+            const cardElem = new Card("ZERO", "blue");
             let timeout:NodeJS.Timeout;
             const x = i * cardElem.width;
             cardElem.x = x;
@@ -55,7 +53,6 @@ export default class Hand extends PIXI.Container {
             draggable<Card>(cardElem);
             this.#cardContainer.addChild(cardElem);
         });
-        this.updatePosition();
     }
 
     #sortCard(card: Card)
@@ -70,11 +67,5 @@ export default class Hand extends PIXI.Container {
             }
             return 0;
         });
-    }
-
-    updatePosition()
-    {
-        this.y = window.innerHeight - this.height - 10;
-        this.x = (window.innerWidth / 2) - (this.width / 2);
     }
 };
