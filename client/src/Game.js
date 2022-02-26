@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 
 import Player from "./Player";
 import Card from "./Card";
-import {PICKER_TYPES} from "./utils";
 
 export default class Game extends React.Component {
     players = {};
@@ -25,11 +24,7 @@ export default class Game extends React.Component {
             const container = document.createElement("div");
             container.className = "cardStack";
 
-            // const temp = Card.render({type: 0});
             ReactDOM.render(<Card color={color} type={type} />, container);
-            // const temp = document.createElement("img");
-            // temp.src = getImage(color, type);
-            // container.appendChild(temp);
             
             container.style.position = "absolute";
             container.style.left = pos.left + "px";
@@ -37,15 +32,14 @@ export default class Game extends React.Component {
             container.style.top = pos.top + "px";
             document.body.appendChild(container);
 
-            container.animate([
+            const anim = container.animate([
                 { transform: 'translateY(0px) translateX(0px)' },
                 { transform: `translateY(${posTarget.top - pos.top}px) translateX(${(posTarget.left - pos.left) + 50}px)` }
               ], {
                 duration: 200,
             });
-            setTimeout(() => {
-                container.outerHTML = "";
-            }, 200);
+
+            anim.onfinish = () => document.body.removeChild(container);
         }
     }
 
