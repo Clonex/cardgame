@@ -1,4 +1,4 @@
-export const SERVER_IP = process.env.NODE_ENV === "production" ? "wss://cardapi.clonex.dk" : "ws://localhost:8080";
+export const SERVER_IP = process.env.NODE_ENV === "production" || 1 ? "wss://cardapi.clonex.dk" : "ws://localhost:8080";
 
 export function getImage(color, type)
 {
@@ -38,4 +38,12 @@ export const types = {
 export function rads(degrees)
 {
   return degrees * (Math.PI / 180);
+};
+
+export function hashRouter()
+{
+    const currentLocation = () => window.location.hash.replace(/^#/, "") || "/";
+    const navigate = (to) => (window.location.hash = to);
+
+    return [currentLocation(), navigate];
 };

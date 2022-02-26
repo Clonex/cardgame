@@ -1,16 +1,16 @@
 // import {useState, useEffect} from "react";
 import React from "react";
-import { Link, Route, Redirect, Switch } from "wouter";
+import { Route, Redirect, Router } from "wouter";
 
 import Game from "./Game";
 import ConnectionHandler from './ConnectionHandler';
 
-import {SERVER_IP} from "./utils";
+import {SERVER_IP, hashRouter} from "./utils";
 
 import './App.css';
 
 export default class App extends React.Component {
-  gameInstance = React.createRef();;
+  gameInstance = React.createRef();
   connection;
   state = {
     gameID: false,
@@ -30,19 +30,14 @@ export default class App extends React.Component {
   {
     this.connection = new ConnectionHandler(this);
     this.connection.onReady = () => {
-      if(window.location.pathname.includes("/game/"))
+      if(window.location.hash.includes("/game/"))
       {
-        const gameID = window.location.pathname.split("/game/")[1];
+        const gameID = window.location.hash.split("/game/")[1];
         this.setState({gameID});
         this.connection.send({
           cmd: "joinGame",
           gameID,
         });
-
-        // this.connection.send({
-        //     cmd: "getPlayers",
-        //     id: gameID
-        // });
       }
     };
   }
@@ -54,7 +49,6 @@ export default class App extends React.Component {
 
   startGame()
   {
-    
     this.connection.send({cmd: "startGame", size: 0});
   }
   
@@ -65,12 +59,8 @@ export default class App extends React.Component {
     return (
       <div className="App" key={this.state.gameID}>
         <div className="logo">LOGO</div>
-        {/* {
-          !this.state.gameID ? 
-            <button>Join game</button> : 
-            <Game id={this.state.gameID} players={this.state.players} connection={this.connection} />
-        }  */}
-          <Switch>
+
+          <Router hook={hashRouter}>
             <Route path={process.env.PUBLIC_URL + "/game/:gameID"}>
               {(params) => <Game
                 id={params.gameID}
@@ -89,26 +79,9 @@ export default class App extends React.Component {
                 this.state.gameID && <Redirect to={process.env.PUBLIC_URL + "/game/" + this.state.gameID} />
               }
             </Route>
-          </Switch>
+          </Router>
+
       </div>
     );
   }
 }
-// let connection;
-// function App() {
-//   // const [gameID, setGameID] = useState(false);
-
-//   useEffect(() => {
-//     connection = new ConnectionHandler();
-//   }, []);
-  
-//   return (
-//     <div className="App" key={this.state.gameID}>
-//       {
-//         !connection?.gameID ? <button>Join game</button> : <Game id={connection.gameID} connection={connection} />
-//       }
-//     </div>
-//   );
-// }
-
-// export default App;
