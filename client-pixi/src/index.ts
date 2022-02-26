@@ -19,15 +19,18 @@ window.onload = () => {
   app = getApp();
   startLoadingAssets();
   loader.onComplete.once(() => {
-    // const page = new WelcomePage();
-    // State.centerElems.push(page);
+    const page = new WelcomePage();
 
-    // app.stage.addChild(page);
-    
-    const page = new GamePage();
-    State.centerElems.push(page);
+    page.onStart = () => {
+      page.alpha = 0;
+      page.interactive = false;
+
+      const gamePage = new GamePage();
+      app.stage.addChild(gamePage);
+    };
 
     app.stage.addChild(page);
+    State.centerElems.push(page);
     setSize();
   });
 

@@ -8,4 +8,5 @@ export default class State {
     static centerElems:(PIXI.Container)[] = [];
 
     static connection = new ConnectionHandler();
+    static events = new PIXI.utils.EventEmitter();
 };

@@ -10,12 +10,14 @@ export default class WelcomePage extends PIXI.Container {
         fill: 0xFFFFFF,
         fontWeight: "bolder",
     });
+    onStart = () => {};
 
     constructor()
     {
         super();
 
         const joinBtn = new Button("New game", 0xFFFFFF, 0xffb100);
+        joinBtn.on("pointerdown", () => this.onStart());
 
         joinBtn.y = this.title.height + 20;
         joinBtn.x = (this.title.width / 2) - (joinBtn.width / 2);

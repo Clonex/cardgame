@@ -14,6 +14,7 @@ export function setSize(): void {
         container.x = (window.innerWidth / 2) - (container.width / 2);
         container.y = (window.innerHeight / 2) - (container.height / 2);
     });
+    State.events.emit("resize");
 }
 
 function onResize(): void {
