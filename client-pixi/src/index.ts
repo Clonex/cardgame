@@ -5,6 +5,7 @@ import { getApp, setSize } from './get-app';
 import State from "./State";
 
 import WelcomePage from "./WelcomePage";
+import GamePage from "./GamePage";
 
 let app: PIXI.Application;
 const loader = Loader.shared;
@@ -18,10 +19,20 @@ window.onload = () => {
   app = getApp();
   startLoadingAssets();
   loader.onComplete.once(() => {
-    const page = new WelcomePage();
+    // const page = new WelcomePage();
+    // State.centerElems.push(page);
+
+    // app.stage.addChild(page);
+    
+    const page = new GamePage();
     State.centerElems.push(page);
 
     app.stage.addChild(page);
     setSize();
   });
+
+  window.gameData = {
+    State,
+    app,
+  };
 };

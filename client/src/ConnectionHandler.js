@@ -15,7 +15,6 @@ export default class ConnectionHandler {
         };
         this.ws.onmessage = data => this.onData(data);
         this.ws.onclose = () => window.location.reload();
-
     }
 
     onData(d)

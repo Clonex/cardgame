@@ -1,11 +1,11 @@
 
 import * as PIXI from 'pixi.js';
 
-import Button from "./UI/Button";
+import Button from "./classes/Button";
 
 export default class WelcomePage extends PIXI.Container {
-    title = new PIXI.Text("Welcome", {
-        fontSize: 48,
+    title = new PIXI.Text("Welcome!", {
+        fontSize: 50,
         fontFamily: "arial",
         fill: 0xFFFFFF,
         fontWeight: "bolder",
