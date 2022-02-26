@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import Card from "./Card";
 import State from "../State";
 
-import {draggable} from "../utils";
+import {draggable, isWithin} from "../utils";
 import {TimedAnimation} from "./animation.js";
 
 export default class Hand extends PIXI.Container {
@@ -21,6 +21,7 @@ export default class Hand extends PIXI.Container {
         this.addChild(this.#cardContainer);
     }
 
+
     setCards(cards)
     {
         this.#cardContainer.removeChildren();
@@ -33,9 +34,18 @@ export default class Hand extends PIXI.Container {
             cardElem.x = x;
             cardElem.on("pointerdown", () => {
                 this.#sortCard(cardElem);
+                cardElem.alpha = 0.5;
                 if(timeout)
                 {
                     clearTimeout(timeout);
+                }
+            });
+            cardElem.on("moved", () => {
+                if(isWithin(cardElem, State.gameView.cardStack))
+                {
+                    cardElem.alpha = 1;
+                }else{
+                    cardElem.alpha = 0.5;
                 }
             });
             cardElem.on("pointerup", () => {
@@ -47,6 +57,7 @@ export default class Hand extends PIXI.Container {
                         cardElem.x = (diffX * progress) + startX;
                         cardElem.y = (diffY * progress) + startY;
                     }, 50);
+                    cardElem.alpha = 1;
                 }, 350);
             });
 

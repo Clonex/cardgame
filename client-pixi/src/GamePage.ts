@@ -6,7 +6,7 @@ import Hand from "./classes/Hand";
 import CardStack from "./classes/CardStack";
 
 export default class GamePage extends PIXI.Container {
-    #cardStack = new CardStack();
+    readonly cardStack = new CardStack();
     #hand;
 
     constructor()
@@ -17,7 +17,7 @@ export default class GamePage extends PIXI.Container {
         this.#hand.setCards([1,2,3]);
 
 
-        this.addChild(this.#cardStack, this.#hand);
+        this.addChild(this.cardStack, this.#hand);
 
         
         State.events.on("resize", () => this.updatePosition());
@@ -27,8 +27,8 @@ export default class GamePage extends PIXI.Container {
     updatePosition()
     {
         // Update card stack position
-        this.#cardStack.x = (window.innerWidth / 2) - (this.#cardStack.width / 2);
-        this.#cardStack.y = (window.innerHeight / 2) - (this.#cardStack.height / 2);
+        this.cardStack.x = (window.innerWidth / 2) - (this.cardStack.width / 2);
+        this.cardStack.y = (window.innerHeight / 2) - (this.cardStack.height / 2);
 
 
         // Update hand poistion

@@ -3,14 +3,21 @@ import {SERVER_IP} from "./utils";
 import Response from "./classes/Response";
 
 export default class ConnectionHandler {
-    ws = new WebSocket(SERVER_IP);
+    ws?:WebSocket;
     #connectionPromises = [];
+    pintInterval?: NodeJS.Timeout;
 
 
     constructor()
     {
+        this.openConnection();
+    }
+
+    openConnection()
+    {
+        this.ws = new WebSocket(SERVER_IP);
         this.ws.onopen = () => this.#onReady();
-        // this.ws.onclose = () => window.location.reload();
+        this.ws.onclose = () => setTimeout(() => this.openConnection(), 200);
         this.ws.onmessage = data => this.#data(data);
     }
 
@@ -18,7 +25,12 @@ export default class ConnectionHandler {
     {
         this.#connectionPromises.forEach(resolve => resolve(true));
         this.send({cmd: "ping"});
-        setInterval(() =>  this.send({cmd: "ping"}), 1000 * 60 * 2);
+
+        if(this.pintInterval)
+        {
+            clearInterval(this.pintInterval);
+        }
+        this.pingInterval = setInterval(() =>  this.send({cmd: "ping"}), 1000 * 60 * 2);
     }
 
     #data(data)

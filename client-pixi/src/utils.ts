@@ -21,3 +21,18 @@ export function draggable<T extends PIXI.Container>(target: T)
 
     return target;
 };
+
+/**
+ * Checks wether @param elem is within @param target.
+ * @param elem 
+ * @param target 
+ * @returns boolean
+ */
+export function isWithin<T extends PIXI.Container, B extends PIXI.Container>(elem: T, target: B)
+{
+    const targetPos = target.getGlobalPosition();
+    const elemPos = elem.getGlobalPosition();
+    
+    return  (elemPos.x >= targetPos.x && (targetPos.x + target.width) > elemPos.x) && // x
+            (elemPos.y >= targetPos.y && (targetPos.y + target.height) > elemPos.y)   // y;
+}
