@@ -12,6 +12,25 @@ export const COLORS = {
     "yellow": 0xf7e359,
 };
 
+export const TYPE_NAME = {
+    "none": "",
+    "ZERO": "0",
+    "ONE": "1",
+    "TWO": "2",
+    "THREE": "3",
+    "FOUR": "4",
+    "FIVE": "5",
+    "SIX": "6",
+    "SEVEN": "7",
+    "EIGHT": "8",
+    "NINE": "9",
+    "reverse": "↪",
+    "skip": "SKIP",
+    "wild": "WILD",
+    "PLUS1": "+1",
+    "PLUS4": "+4",
+};
+
 export default class Card extends PIXI.Container {
     static HEIGHT = 200;
     static WIDHT = 120;
@@ -33,9 +52,9 @@ export default class Card extends PIXI.Container {
         bg.beginFill(COLOR);
 
         
-        const text = new PIXI.Text(type, {
+        const text = new PIXI.Text(TYPE_NAME[type], {
             fill: COLOR,
-            fontSize: 24,
+            fontSize: 50,
         });
         
         if(type === "none" && color === "none")
@@ -43,7 +62,7 @@ export default class Card extends PIXI.Container {
             bg.drawRoundedRect(5, 5, Card.WIDHT - 10, Card.HEIGHT - 10, 3);
             text.style.fill = [COLORS.red, COLORS.blue];
             text.style.fillGradientStops = [0.3, 0.7],
-            text.style.fontSize = 50;
+            // text.style.fontSize = 50;
             text.text = "U";
         }else{
             bg

@@ -20,6 +20,9 @@ window.onload = () => {
   startLoadingAssets();
   // await State.connection.onReady;
   loader.onComplete.once(() => {
+    const gamePage = new GamePage();
+    State.gameView = gamePage;
+
     const page = new WelcomePage();
 
     page.onStart = () => {
@@ -29,16 +32,12 @@ window.onload = () => {
       page.alpha = 0;
       page.interactive = false;
 
-      const gamePage = new GamePage();
-      State.gameView = gamePage;
       app.stage.addChild(gamePage);
     };
-
     // setTimeout(page.onStart, 100);
 
     State.connection.onReady.then(() => {
       app.stage.addChild(page);
-      
 
       if(window.location.hash.includes("/game/"))
       {
@@ -47,6 +46,10 @@ window.onload = () => {
           cmd: "joinGame",
           gameID: id,
         });
+        page.alpha = 0;
+        page.interactive = false;
+
+        app.stage.addChild(gamePage);
       }
 
     });

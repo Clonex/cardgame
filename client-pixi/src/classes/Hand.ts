@@ -16,9 +16,10 @@ export default class Hand extends Player {
         this.#cards = cards;
 
         this.#cards.forEach((card, i) => {
-            const cardElem = new Card("ZERO", "blue");
+            const cardElem = new Card(card.type, card.color);
             let timeout:NodeJS.Timeout;
             const x = i * cardElem.width;
+            cardElem.cursor = "pointer";
             cardElem.x = x;
             cardElem.on("pointerdown", () => {
                 this.#sortCard(cardElem);
@@ -38,15 +39,23 @@ export default class Hand extends Player {
             });
             cardElem.on("pointerup", () => {
                 cardElem.alpha = 1;
-                timeout = setTimeout(() => {
-                    const {x: startX, y: startY} = cardElem;
-                    const diffY = 0 - cardElem.y;
-                    const diffX = x - cardElem.x;
-                    TimedAnimation.run((progress: number) => {
-                        cardElem.x = (diffX * progress) + startX;
-                        cardElem.y = (diffY * progress) + startY;
-                    }, 50);
-                }, 200);
+                if(isWithin(cardElem, State.gameView.cardStack))
+                {
+                    State.connection.send({
+                        cmd: "play",
+                        cardID: card.id
+                    });
+                }else{
+                    timeout = setTimeout(() => {
+                        const {x: startX, y: startY} = cardElem;
+                        const diffY = 0 - cardElem.y;
+                        const diffX = x - cardElem.x;
+                        TimedAnimation.run((progress: number) => {
+                            cardElem.x = (diffX * progress) + startX;
+                            cardElem.y = (diffY * progress) + startY;
+                        }, 50);
+                    }, 200);
+                }
             });
 
             draggable<Card>(cardElem);

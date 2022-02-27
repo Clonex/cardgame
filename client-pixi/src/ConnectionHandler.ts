@@ -55,7 +55,9 @@ export default class ConnectionHandler {
                 {
                     window.location.assign("/");
                 }else{
+                    console.log("huh", game);
                     game.hand.id = data.id;
+                    game.id = data.gameID;
                     this.send({
                         cmd: "getCards"
                     });

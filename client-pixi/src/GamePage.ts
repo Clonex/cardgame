@@ -17,11 +17,12 @@ export default class GamePage extends PIXI.Container {
 
     #colorPicker = new ColorPicker();
 
+    #playerContainer = new PIXI.Container();
     #buttonContainer = new PIXI.Container();
     #drawButton = new Button("Draw", 0xFFFFFF, 0x333333);
     #endTurn = new Button("End turn", 0xFFFFFF, 0x333333);
 
-    #currentTurn = 0;
+    #currentTurn = "0";
 
     constructor()
     {
@@ -33,7 +34,7 @@ export default class GamePage extends PIXI.Container {
         this.#endTurn.x = this.#drawButton.width + 20;
 
         this.#buttonContainer.addChild(this.#endTurn, this.#drawButton);
-        this.addChild(this.cardStack, this.#buttonContainer, this.hand);
+        this.addChild(this.cardStack, this.#buttonContainer, this.#playerContainer, this.hand);
 
         // let players = [{
         //     id: "10",
@@ -83,7 +84,7 @@ export default class GamePage extends PIXI.Container {
         if(!player)
         {
             player = new Player(id);
-            this.addChild(player);
+            this.#playerContainer.addChild(player);
             this.#players[player.id] = player;
         }
 
@@ -97,9 +98,10 @@ export default class GamePage extends PIXI.Container {
         return this.#players[id];
     }
 
-    setTurn(turn)
+    setTurn(playerID: string)
     {
-        if(false)
+        this.#currentTurn = playerID;
+        if(playerID === this.hand.id)
         {
             this.#drawButton.interactive = true;
             this.#endTurn.interactive = true;
