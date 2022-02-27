@@ -7,7 +7,7 @@
     "code-coverage": "jest --coverage",
     "dev": "parcel ./src/index.html --port=8080 --open ",
     "prebuild": "npx del-cli ./dist",
-    "build": "parcel build ./src/index.html"
+    "build": "parcel build ./src/index.html --public-url ./"
   },
   "author": "bySabi Files",
   "license": "MIT",
