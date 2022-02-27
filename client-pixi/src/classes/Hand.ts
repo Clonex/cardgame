@@ -5,7 +5,7 @@ import Player from "./Player";
 import State from "../State";
 
 import {draggable, isWithin} from "../utils";
-import {TimedAnimation} from "./animation.js";
+import {TimedAnimation} from "./animation";
 
 export default class Hand extends Player {
     #cards = [];

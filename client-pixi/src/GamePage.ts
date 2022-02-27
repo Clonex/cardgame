@@ -2,14 +2,24 @@ import * as PIXI from "pixi.js";
 
 import State from "./State";
 
+import Button from "./classes/Button";
 import Hand from "./classes/Hand";
 import Player from "./classes/Player";
 import CardStack from "./classes/CardStack";
+import ColorPicker from "./classes/ColorPicker";
 
 export default class GamePage extends PIXI.Container {
     readonly cardStack = new CardStack();
     #hand;
     #players: {[key: string]: Player} = {};
+
+    #colorPicker = new ColorPicker();
+
+    #buttonContainer = new PIXI.Container();
+    #drawButton = new Button("Draw", 0xFFFFFF, 0x333333);
+    #endTurn = new Button("End turn", 0xFFFFFF, 0x333333);
+
+    #currentTurn = 0;
 
     constructor()
     {
@@ -18,8 +28,10 @@ export default class GamePage extends PIXI.Container {
         this.#hand = new Hand("1");
         this.#hand.setCards([1,2,3]);
 
+        this.#endTurn.x = this.#drawButton.width + 20;
 
-        this.addChild(this.cardStack, this.#hand);
+        this.#buttonContainer.addChild(this.#endTurn, this.#drawButton);
+        this.addChild(this.cardStack, this.#buttonContainer, this.#hand);
 
         let players = [{
             id: "10",
@@ -55,9 +67,26 @@ export default class GamePage extends PIXI.Container {
             this.addChild(temp);
             this.#players[player.id] = temp;
         }
+        this.addChild(this.#colorPicker);
+        this.#colorPicker.show();
 
         State.events.on("resize", () => this.updatePosition());
         this.updatePosition();
+        this.setTurn(false);
+    }
+
+    setTurn(turn)
+    {
+        if(false)
+        {
+            this.#drawButton.interactive = true;
+            this.#endTurn.interactive = true;
+            this.#buttonContainer.alpha = 1;
+        }else{
+            this.#drawButton.interactive = false;
+            this.#endTurn.interactive = false;
+            this.#buttonContainer.alpha = 0.2;
+        }
     }
 
     updatePosition()
@@ -69,6 +98,10 @@ export default class GamePage extends PIXI.Container {
         // Update hand poistion
         this.#hand.y = window.innerHeight - this.#hand.height - 10;
         this.#hand.x = (window.innerWidth / 2) - (this.#hand.width / 2);
+
+        // Button container position
+        this.#buttonContainer.x = (window.innerWidth / 2) - (this.#buttonContainer.width / 2);
+        this.#buttonContainer.y = this.#hand.y - this.#buttonContainer.height - 10;
 
         // Update player positions
         const players: Player[] = Object.values(this.#players);
