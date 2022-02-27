@@ -12,7 +12,7 @@ export default class GamePage extends PIXI.Container {
     readonly cardStack = new CardStack();
     id = "0";
 
-    #hand;
+    readonly hand;
     #players: {[key: string]: Player} = {};
 
     #colorPicker = new ColorPicker();
@@ -27,13 +27,13 @@ export default class GamePage extends PIXI.Container {
     {
         super();
 
-        this.#hand = new Hand("1");
-        // this.#hand.setCards([1,2,3]);
+        this.hand = new Hand("");
+        // this.hand.setCards([1,2,3]);
 
         this.#endTurn.x = this.#drawButton.width + 20;
 
         this.#buttonContainer.addChild(this.#endTurn, this.#drawButton);
-        this.addChild(this.cardStack, this.#buttonContainer, this.#hand);
+        this.addChild(this.cardStack, this.#buttonContainer, this.hand);
 
         // let players = [{
         //     id: "10",
@@ -77,6 +77,26 @@ export default class GamePage extends PIXI.Container {
         this.setTurn(false);
     }
 
+    setCards(id: string, cards)
+    {
+        let player = this.getPlayer(id);
+        if(!player)
+        {
+            player = new Player(id);
+            this.addChild(player);
+            this.#players[player.id] = player;
+        }
+
+        player.setCards(cards);
+
+        this.updatePosition();
+    }
+
+    getPlayer(id)
+    {
+        return this.#players[id];
+    }
+
     setTurn(turn)
     {
         if(false)
@@ -98,12 +118,12 @@ export default class GamePage extends PIXI.Container {
         this.cardStack.y = (window.innerHeight / 2) - (this.cardStack.height / 2);
 
         // Update hand poistion
-        this.#hand.y = window.innerHeight - this.#hand.height - 10;
-        this.#hand.x = (window.innerWidth / 2) - (this.#hand.width / 2);
+        this.hand.y = window.innerHeight - this.hand.height - 10;
+        this.hand.x = (window.innerWidth / 2) - (this.hand.width / 2);
 
         // Button container position
         this.#buttonContainer.x = (window.innerWidth / 2) - (this.#buttonContainer.width / 2);
-        this.#buttonContainer.y = this.#hand.y - this.#buttonContainer.height - 10;
+        this.#buttonContainer.y = this.hand.y - this.#buttonContainer.height - 10;
 
         // Update player positions
         const players: Player[] = Object.values(this.#players);

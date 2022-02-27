@@ -6,7 +6,7 @@ export default class Plauer extends PIXI.Container {
     #cards = [];
 
     readonly cardContainer = new PIXI.Container();
-    readonly id;
+    id;
 
     constructor(id: string)
     {

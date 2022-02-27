@@ -38,6 +38,17 @@ window.onload = () => {
 
     State.connection.onReady.then(() => {
       app.stage.addChild(page);
+      
+
+      if(window.location.hash.includes("/game/"))
+      {
+        const id = window.location.hash.split("/game/")[1];
+        State.connection.send({
+          cmd: "joinGame",
+          gameID: id,
+        });
+      }
+
     });
     State.centerElems.push(page);
     setSize();

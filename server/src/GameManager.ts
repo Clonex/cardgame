@@ -122,6 +122,7 @@ export default class GameManager {
                         this.send({
                             cmd: data.cmd,
                             id: player.id,
+                            gameID: data.gameID,
                         }, conn);
                         this.trigger("cardStack", player.parent);
                     }

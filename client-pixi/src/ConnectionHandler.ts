@@ -37,6 +37,7 @@ export default class ConnectionHandler {
     #data(d)
     {
         const data = JSON.parse(d.data);
+        const game = State.gameView;
         console.log("Got something", data);
 
         switch (data.cmd)
@@ -47,17 +48,32 @@ export default class ConnectionHandler {
                     cmd: "joinGame",
                     gameID: data.id,
                 });
-                State.gameView.id = data.id;
+                game.id = data.id;
             break;
             case "joinGame":
                 if(!data.id)
                 {
                     window.location.assign("/");
                 }else{
+                    game.hand.id = data.id;
                     this.send({
                         cmd: "getCards"
                     });
                 }
+            break;
+            case "getCards":
+                for(let i = 0; i < data.players.length; i++)
+                {
+                    const player = data.players[i];
+                    if(player.id === game.hand.id)
+                    {
+                        game.hand.setCards(player.cards);
+                    }else{
+                        game.setCards(player.id, player.cards);
+                    }
+                }
+                game.setTurn(data.currentTurn);
+                game.updatePosition();
             break;
         }
     }
