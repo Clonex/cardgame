@@ -10,6 +10,8 @@ import ColorPicker from "./classes/ColorPicker";
 
 export default class GamePage extends PIXI.Container {
     readonly cardStack = new CardStack();
+    id = "0";
+
     #hand;
     #players: {[key: string]: Player} = {};
 
@@ -26,47 +28,48 @@ export default class GamePage extends PIXI.Container {
         super();
 
         this.#hand = new Hand("1");
-        this.#hand.setCards([1,2,3]);
+        // this.#hand.setCards([1,2,3]);
 
         this.#endTurn.x = this.#drawButton.width + 20;
 
         this.#buttonContainer.addChild(this.#endTurn, this.#drawButton);
         this.addChild(this.cardStack, this.#buttonContainer, this.#hand);
 
-        let players = [{
-            id: "10",
-            cards: [{
-                color: "none",
-                type: "none",
-            },{
-                color: "none",
-                type: "none",
-            },{
-                color: "none",
-                type: "none",
-            }],
-        },{
-            id: "11",
-            cards: [{
-                color: "none",
-                type: "none",
-            },{
-                color: "none",
-                type: "none",
-            },{
-                color: "none",
-                type: "none",
-            }],
-        }];
-        for(let i = 0; i < players.length; i++)
-        {
-            const player = players[i];
-            const temp = new Player(player.id);
-            temp.setCards(player.cards);
+        // let players = [{
+        //     id: "10",
+        //     cards: [{
+        //         color: "none",
+        //         type: "none",
+        //     },{
+        //         color: "none",
+        //         type: "none",
+        //     },{
+        //         color: "none",
+        //         type: "none",
+        //     }],
+        // },{
+        //     id: "11",
+        //     cards: [{
+        //         color: "none",
+        //         type: "none",
+        //     },{
+        //         color: "none",
+        //         type: "none",
+        //     },{
+        //         color: "none",
+        //         type: "none",
+        //     }],
+        // }];
+        // for(let i = 0; i < players.length; i++)
+        // {
+        //     const player = players[i];
+        //     const temp = new Player(player.id);
+        //     temp.setCards(player.cards);
 
-            this.addChild(temp);
-            this.#players[player.id] = temp;
-        }
+        //     this.addChild(temp);
+        //     this.#players[player.id] = temp;
+        // }
+
         this.addChild(this.#colorPicker);
 
         State.events.on("resize", () => this.updatePosition());

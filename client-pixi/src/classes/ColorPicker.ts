@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import Card from "./Card";
 import State from "../State";
 import {TimedAnimation} from "./animation";
-import {COLORS} from "./Card";
+import {COLORS, Colors} from "./Card";
 import {scaleTo} from "../utils";
 
 export default class ColorPicker extends PIXI.Container {
@@ -22,11 +22,11 @@ export default class ColorPicker extends PIXI.Container {
         boxBG.beginFill(0xFFFFFF).drawRect(0, 0, 692, 280);
         this.container.addChild(boxBG);
 
-        const colors = Object.keys(COLORS);
-        for(let i = 1; i < colors.length; i++)
+        const colorArr = Object.keys(COLORS);
+        for(let i = 1; i < colorArr.length; i++)
         {
-            const color = colors[i];
-            const temp = new Card("wild", "blue");
+            const color: Colors = colorArr[i] as Colors;
+            const temp = new Card("wild", color);
             temp.scale.set(1.2);
             temp.interactive = true;
             temp.cursor = "pointer";

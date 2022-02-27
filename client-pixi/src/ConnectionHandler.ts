@@ -1,6 +1,7 @@
 import {SERVER_IP} from "./utils";
 
-import Response from "./classes/Response";
+import State from "./State";
+// import Response from "./classes/Response";
 
 export default class ConnectionHandler {
     ws?:WebSocket;
@@ -33,18 +34,41 @@ export default class ConnectionHandler {
         this.pingInterval = setInterval(() =>  this.send({cmd: "ping"}), 1000 * 60 * 2);
     }
 
-    #data(data)
+    #data(d)
     {
+        const data = JSON.parse(d.data);
+        console.log("Got something", data);
 
+        switch (data.cmd)
+        {
+            case "startGame":
+                window.location.hash = `/game/${data.id}`;
+                this.send({
+                    cmd: "joinGame",
+                    gameID: data.id,
+                });
+                State.gameView.id = data.id;
+            break;
+            case "joinGame":
+                if(!data.id)
+                {
+                    window.location.assign("/");
+                }else{
+                    this.send({
+                        cmd: "getCards"
+                    });
+                }
+            break;
+        }
     }
 
     get onReady()
     {
         return new Promise(r => {
-            if(this.ws.readyState === 1)
+            if(this.ws?.readyState === 1)
             {
                 r(true);
-            }else if(this.ws.readyState > 1)
+            }else if((this.ws?.readyState ?? 0) > 1)
             {
                 r(false);
             }else{
@@ -53,8 +77,8 @@ export default class ConnectionHandler {
         });
     }
 
-    send(data: Response<T>): void
+    send(data: {[key: string]: string|number}): void
     {
-        this.ws.send(JSON.stringify(data));
+        this.ws?.send(JSON.stringify(data));
     }
 };

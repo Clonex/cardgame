@@ -18,10 +18,14 @@ function startLoadingAssets(): void {
 window.onload = () => {
   app = getApp();
   startLoadingAssets();
+  // await State.connection.onReady;
   loader.onComplete.once(() => {
     const page = new WelcomePage();
 
     page.onStart = () => {
+      State.connection.send({
+        cmd: "startGame"
+      });
       page.alpha = 0;
       page.interactive = false;
 
@@ -30,9 +34,11 @@ window.onload = () => {
       app.stage.addChild(gamePage);
     };
 
-    setTimeout(page.onStart, 100);
+    // setTimeout(page.onStart, 100);
 
-    app.stage.addChild(page);
+    State.connection.onReady.then(() => {
+      app.stage.addChild(page);
+    });
     State.centerElems.push(page);
     setSize();
   });
