@@ -27,7 +27,7 @@ export default class Plauer extends PIXI.Container {
             const cardElem = new Card(card.type ?? "none", card.color ?? "none");
             cardElem.x = i * (cardElem.width * 0.2);
 
-            this.addChild(cardElem);
+            this.cardContainer.addChild(cardElem);
         });
     }
 };

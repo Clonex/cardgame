@@ -77,6 +77,9 @@ export default class ConnectionHandler {
                 game.setTurn(data.currentTurn);
                 game.updatePosition();
             break;
+            case "cardStack":
+                game.cardStack.setCards(data.stack);
+            break;
         }
     }
 

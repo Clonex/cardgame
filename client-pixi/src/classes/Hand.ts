@@ -42,7 +42,7 @@ export default class Hand extends Player {
                 if(isWithin(cardElem, State.gameView.cardStack))
                 {
                     State.connection.send({
-                        cmd: "play",
+                        cmd: "playCard",
                         cardID: card.id
                     });
                 }else{
