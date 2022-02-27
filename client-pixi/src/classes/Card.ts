@@ -4,7 +4,7 @@ import * as PIXI from "pixi.js";
 export type Types = "none" | "ZERO" | "ONE" | "TWO" | "THREE" | "FOUR" | "FIVE" | "SIX" | "SEVEN" | "EIGHT" | "NINE" | "reverse" | "skip" | "wild" | "PLUS1" | "PLUS4";
 export type Colors = "red" | "blue" | "green" | "yellow" | "none";
 
-const COLORS = {
+export const COLORS = {
     "none": 0x333333,
     "red": 0xf56462,
     "blue": 0x00c3e5,

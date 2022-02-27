@@ -68,7 +68,6 @@ export default class GamePage extends PIXI.Container {
             this.#players[player.id] = temp;
         }
         this.addChild(this.#colorPicker);
-        this.#colorPicker.show();
 
         State.events.on("resize", () => this.updatePosition());
         this.updatePosition();

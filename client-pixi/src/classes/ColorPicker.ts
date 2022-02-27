@@ -1,11 +1,16 @@
 import * as PIXI from "pixi.js";
 
+import Card from "./Card";
 import State from "../State";
+import {TimedAnimation} from "./animation";
+import {COLORS} from "./Card";
+import {scaleTo} from "../utils";
 
 export default class ColorPicker extends PIXI.Container {
     readonly bg = new PIXI.Graphics();
     readonly container = new PIXI.Container();
 
+    alpha = 0;
     visible = false;
     interactive = true;
 
@@ -14,8 +19,24 @@ export default class ColorPicker extends PIXI.Container {
         super();
 
         const boxBG = new PIXI.Graphics();
-        boxBG.beginFill(0xFFFFFF).drawRect(0, 0, 800, 400);
+        boxBG.beginFill(0xFFFFFF).drawRect(0, 0, 692, 280);
         this.container.addChild(boxBG);
+
+        const colors = Object.keys(COLORS);
+        for(let i = 1; i < colors.length; i++)
+        {
+            const color = colors[i];
+            const temp = new Card("wild", "blue");
+            temp.scale.set(1.2);
+            temp.interactive = true;
+            temp.cursor = "pointer";
+            temp.on("pointerover", () => scaleTo(1.22, temp, 100));
+            temp.on("pointerout", () => scaleTo(1.2, temp, 100));
+
+            temp.y = 20;
+            temp.x = (i - 1) * (temp.width + 20) + 20;
+            this.container.addChild(temp);
+        }
 
         this.addChild(this.bg, this.container);
 
@@ -25,7 +46,21 @@ export default class ColorPicker extends PIXI.Container {
 
     show()
     {
-        
+        this.visible = true;
+        TimedAnimation.run(p =>{
+            this.alpha = p;
+        }, 100);
+    }
+
+    hide()
+    {
+        TimedAnimation.run(p =>{
+            this.alpha = 1 - p;
+            if(p === 1)
+            {
+                this.visible = false;
+            }
+        }, 100);
     }
 
     updateSize()

@@ -129,7 +129,7 @@ export class TimedAnimation extends Animation {
     _time = 0;
     _timedJob;
 
-    constructor(job: TimedAnimation['_job'], time: number)
+    constructor(job: (progress: number, c: 0) => void, time: number)
     {
         super();
         this._job = this._animationLoop;
@@ -152,7 +152,7 @@ export class TimedAnimation extends Animation {
         return false;
     }
 
-    static run(job: ReversingAnimation['_job'], time: number)
+    static run(job: (progress: number, c?: 0) => void, time: number)
     {
         return new TimedAnimation(job, time);
     }

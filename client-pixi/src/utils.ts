@@ -1,7 +1,8 @@
 export const SERVER_IP = process.env.NODE_ENV === "production" || 1 ? "wss://cardapi.clonex.dk" : "ws://localhost:8080";
 
-
 import * as PIXI from "pixi.js";
+import {TimedAnimation} from "./classes/animation";
+
 export function draggable<T extends PIXI.Container>(target: T)
 {
     target.interactive = true;
@@ -40,4 +41,13 @@ export function isWithin<T extends PIXI.Container, B extends PIXI.Container>(ele
 export function clamp(value: number, min: number, max: number)
 {
     return Math.max(Math.min(value, min), max);
+}
+
+export function scaleTo(targetScale: number, element: PIXI.Container, time: number)
+{
+    const startScale = element.scale.x;
+    const diff = targetScale - startScale;
+    TimedAnimation.run(p => {
+        element.scale.set(startScale + (diff * p));
+    }, time);
 }
