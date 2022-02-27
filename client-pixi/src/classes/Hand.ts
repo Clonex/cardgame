@@ -46,7 +46,7 @@ export default class Hand extends Player {
                         cardElem.x = (diffX * progress) + startX;
                         cardElem.y = (diffY * progress) + startY;
                     }, 50);
-                }, 350);
+                }, 200);
             });
 
             draggable<Card>(cardElem);

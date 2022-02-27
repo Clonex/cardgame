@@ -30,7 +30,7 @@ window.onload = () => {
       app.stage.addChild(gamePage);
     };
 
-    // setTimeout(page.onStart, 100);
+    setTimeout(page.onStart, 100);
 
     app.stage.addChild(page);
     State.centerElems.push(page);

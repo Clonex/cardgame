@@ -5,7 +5,7 @@ export type Types = "none" | "ZERO" | "ONE" | "TWO" | "THREE" | "FOUR" | "FIVE" 
 export type Colors = "red" | "blue" | "green" | "yellow" | "none";
 
 const COLORS = {
-    "none": 0x4d4d4d,
+    "none": 0x333333,
     "red": 0xf56462,
     "blue": 0x00c3e5,
     "green": 0x2fe29b,
