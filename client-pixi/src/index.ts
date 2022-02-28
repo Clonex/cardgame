@@ -1,3 +1,4 @@
+// import 'regenerator-runtime/runtime';
 import { Loader } from 'pixi.js';
 import type PIXI from 'pixi.js';
 import { getApp, setSize } from './get-app';

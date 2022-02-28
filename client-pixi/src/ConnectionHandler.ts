@@ -97,7 +97,7 @@ export default class ConnectionHandler {
         });
     }
 
-    send(data: {[key: string]: string|number}): void
+    send(data: {[key: string]: string|number|undefined}): void
     {
         this.ws?.send(JSON.stringify(data));
     }

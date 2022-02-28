@@ -14,6 +14,8 @@ export default class ColorPicker extends PIXI.Container {
     visible = false;
     interactive = true;
 
+    #resolve;
+
     constructor()
     {
         super();
@@ -32,6 +34,10 @@ export default class ColorPicker extends PIXI.Container {
             temp.cursor = "pointer";
             temp.on("pointerover", () => scaleTo(1.22, temp, 100));
             temp.on("pointerout", () => scaleTo(1.2, temp, 100));
+            temp.on("pointerdown", () => {
+                this.hide();
+                this.#resolve(color);
+            });
 
             temp.y = 20;
             temp.x = (i - 1) * (temp.width + 20) + 20;
@@ -42,6 +48,15 @@ export default class ColorPicker extends PIXI.Container {
 
         State.events.on("resize", () => this.updateSize());
         this.updateSize();
+    }
+
+
+    open()
+    {
+        return new Promise(r => {
+            this.#resolve = r;
+            this.show();
+        });
     }
 
     show()

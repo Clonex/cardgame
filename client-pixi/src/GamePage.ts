@@ -6,7 +6,6 @@ import Button from "./classes/Button";
 import Hand from "./classes/Hand";
 import Player from "./classes/Player";
 import CardStack from "./classes/CardStack";
-import ColorPicker from "./classes/ColorPicker";
 
 export default class GamePage extends PIXI.Container {
     readonly cardStack = new CardStack();
@@ -15,7 +14,6 @@ export default class GamePage extends PIXI.Container {
     readonly hand;
     #players: {[key: string]: Player} = {};
 
-    #colorPicker = new ColorPicker();
 
     #playerContainer = new PIXI.Container();
     #buttonContainer = new PIXI.Container();
@@ -46,7 +44,7 @@ export default class GamePage extends PIXI.Container {
             });
         });
 
-        this.addChild(this.cardStack, this.#buttonContainer, this.#playerContainer, this.hand, this.#colorPicker);
+        this.addChild(this.cardStack, this.#buttonContainer, this.#playerContainer, this.hand, State.colorPicker);
 
         State.events.on("resize", () => this.updatePosition());
         this.updatePosition();

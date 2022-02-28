@@ -38,13 +38,19 @@ export default class Hand extends Player {
                     cardElem.alpha = 0.5;
                 }
             });
-            cardElem.on("pointerup", () => {
+            cardElem.on("pointerup", async () => {
                 cardElem.alpha = 1;
                 if(isWithin(cardElem, State.gameView.cardStack))
                 {
+                    let color = undefined;
+                    if(IS_PICK)
+                    {
+                        color = await State.colorPicker.open();
+                    }
                     State.connection.send({
                         cmd: "playCard",
-                        cardID: card.id
+                        cardID: card.id,
+                        color,
                     });
                 }else{
                     timeout = setTimeout(() => {
