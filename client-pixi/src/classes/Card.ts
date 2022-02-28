@@ -4,12 +4,20 @@ import * as PIXI from "pixi.js";
 export type Types = "none" | "ZERO" | "ONE" | "TWO" | "THREE" | "FOUR" | "FIVE" | "SIX" | "SEVEN" | "EIGHT" | "NINE" | "reverse" | "skip" | "wild" | "PLUS1" | "PLUS4";
 export type Colors = "red" | "blue" | "green" | "yellow" | "none";
 
+export const PICKER_TYPES = ["PLUS4", "wild"];
+
 export const COLORS = {
     "none": 0x333333,
     "red": 0xf56462,
     "blue": 0x00c3e5,
     "green": 0x2fe29b,
     "yellow": 0xf7e359,
+};
+
+export interface SERVER_CARD {
+    id: string,
+    color?: Colors,
+    type?: Types,
 };
 
 export const TYPE_NAME = {

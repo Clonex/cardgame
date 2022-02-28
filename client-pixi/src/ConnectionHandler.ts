@@ -6,8 +6,7 @@ import State from "./State";
 export default class ConnectionHandler {
     ws?:WebSocket;
     #connectionPromises = [];
-    pintInterval?: NodeJS.Timeout;
-
+    pingInterval?: NodeJS.Timeout;
 
     constructor()
     {
@@ -27,9 +26,9 @@ export default class ConnectionHandler {
         this.#connectionPromises.forEach(resolve => resolve(true));
         this.send({cmd: "ping"});
 
-        if(this.pintInterval)
+        if(this.pingInterval)
         {
-            clearInterval(this.pintInterval);
+            clearInterval(this.pingInterval);
         }
         this.pingInterval = setInterval(() =>  this.send({cmd: "ping"}), 1000 * 60 * 2);
     }

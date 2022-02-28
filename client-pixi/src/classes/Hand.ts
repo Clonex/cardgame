@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 
-import Card from "./Card";
+import Card, {PICKER_TYPES, SERVER_CARD} from "./Card";
 import Player from "./Player";
 import State from "../State";
 
@@ -8,15 +8,16 @@ import {draggable, isWithin} from "../utils";
 import {TimedAnimation} from "./animation";
 
 export default class Hand extends Player {
-    #cards = [];
+    #cards: SERVER_CARD[] = [];
 
-    setCards(cards)
+    setCards(cards: SERVER_CARD[])
     {
         this.cardContainer.removeChildren();
         this.#cards = cards;
 
         this.#cards.forEach((card, i) => {
-            const cardElem = new Card(card.type, card.color);
+            const IS_PICK = PICKER_TYPES.includes(card.type ?? "none");
+            const cardElem = new Card(card.type ?? "none", IS_PICK ? "none" : (card?.color ?? "none"));
             let timeout:NodeJS.Timeout;
             const x = i * cardElem.width;
             cardElem.cursor = "pointer";
