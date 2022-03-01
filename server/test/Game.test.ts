@@ -77,7 +77,6 @@ describe('Test Suite 1', () => {
     it('+2 works correctly', () => {
         const player = game.currentPlayer;
         const nextPlayer = game.nextPlayer;
-        const lastTurn = game.currentTurn;
 
         // Play +2 card
         const targetCard = game.nextPlayer.cards.find(card => card.type !== Types.PLUS1 && card.type !== Types.wild && card.type !== Types.PLUS4);

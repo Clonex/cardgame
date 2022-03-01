@@ -85,7 +85,7 @@ export default class GameManager {
             case "endTurn":
             {
                 const player = conn.player;
-                if(player)
+                if(player && player.parent.currentPlayer.id === player.id)
                 {
                     player.parent.endTurn();
                     this.trigger("getCards", player.parent);

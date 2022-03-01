@@ -51,6 +51,7 @@ export default class Game {
             {
                 this.drawBuffer--;
                 player.drawCard();
+                this.currentPlayer.didDraw = false;
             }
 
             const card = player.getCard(cardID);
