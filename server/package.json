@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ./node_modules/.bin/_mocha 'test/**/*.test.ts'",
+    "coverage": "nyc ./node_modules/.bin/_mocha 'test/**/*.test.ts'",
+    "test": "mocha 'test/**/*.test.ts'",
     "start": "ts-node src/index.ts",
     "watch": "tsnd --respawn src/index.ts"
   },
