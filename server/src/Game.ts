@@ -47,6 +47,12 @@ export default class Game {
         const player = this.getPlayer(playerID);
         if(this.currentTurn === this._players.indexOf(player) && player)
         {
+            if(this.drawBuffer > 1)
+            {
+                this.drawBuffer--;
+                player.drawCard();
+            }
+
             const card = player.getCard(cardID);
             if(card?.playable(this.cardStack[this.cardStack.length - 1]))
             {

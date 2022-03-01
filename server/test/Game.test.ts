@@ -5,7 +5,10 @@ import Card, {Types, Colors} from "../src/Card";
 
 // console.log(_chai);
 describe('Test Suite 1', () => {
-    const game = new Game(4, 6);
+    let game;
+    beforeEach(() => {
+        game = new Game(4, 6);
+    });
 
     it('Playing card moves to next player', () => {
         const player = game.currentPlayer;
@@ -48,7 +51,8 @@ describe('Test Suite 1', () => {
         player.cards.push(tempCard);
 
         game.play(player.id, tempCard.id, "none");
-        
+        game.endTurn();
+
         expect(lastTurn).to.not.equal(game.currentTurn);
         expect(nextPlayer).to.not.equal(game.currentPlayer);
     });
@@ -68,5 +72,24 @@ describe('Test Suite 1', () => {
         game.play(player.id, tempCardOther.id, "none");
         
         expect(lastTurn).to.equal(game.currentTurn);
+    });
+    
+    it('+2 works correctly', () => {
+        const player = game.currentPlayer;
+        const nextPlayer = game.nextPlayer;
+        const lastTurn = game.currentTurn;
+
+        // Play +2 card
+        const targetCard = game.nextPlayer.cards.find(card => card.type !== Types.PLUS1 && card.type !== Types.wild && card.type !== Types.PLUS4);
+        const tempCard = new Card(Types.PLUS1, targetCard.color, player);
+        player.cards.push(tempCard);
+        game.play(player.id, tempCard.id, "none");
+        game.endTurn();
+
+        // Next player plays a non + card
+        const handSize = nextPlayer.cards.length;
+        game.play(nextPlayer.id, targetCard.id, "none");
+
+        expect(handSize).to.equal(nextPlayer.cards.length);
     });
 });
