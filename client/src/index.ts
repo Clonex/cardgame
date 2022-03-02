@@ -13,7 +13,7 @@ let app: PIXI.Application;
 const loader = Loader.shared;
 
 function startLoadingAssets(): void {
-  loader.add('rabbit', './assets/rabbit.png');
+  // loader.add('rabbit', './assets/.png');
   loader.load();
 }
 
