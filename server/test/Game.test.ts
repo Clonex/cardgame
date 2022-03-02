@@ -79,7 +79,7 @@ describe('Test Suite 1', () => {
         const nextPlayer = game.nextPlayer;
 
         // Play +2 card
-        const targetCard = game.nextPlayer.cards.find(card => card.type !== Types.PLUS1 && card.type !== Types.wild && card.type !== Types.PLUS4);
+        const targetCard = nextPlayer.cards.find(card => card.type !== Types.PLUS1 && card.type !== Types.wild && card.type !== Types.PLUS4);
         const tempCard = new Card(Types.PLUS1, targetCard.color, player);
         player.cards.push(tempCard);
         game.play(player.id, tempCard.id, "none");
@@ -90,5 +90,19 @@ describe('Test Suite 1', () => {
         game.play(nextPlayer.id, targetCard.id, "none");
 
         expect(handSize).to.equal(nextPlayer.cards.length);
+    });
+    
+    it('Normal cards dont stack after wild cards', () => {
+        const player = game.currentPlayer;
+        const targetCard = player.cards.find(card => card.color != Colors.none);
+
+        const tempCard = new Card(Types.PLUS1, Colors.none, player);
+        player.cards.push(tempCard);
+        game.play(player.id, tempCard.id, targetCard.color);
+
+        const handSize = player.cards.length;
+        game.play(player.id, targetCard.id, "none");
+
+        expect(handSize).to.equal(player.cards.length);
     });
 });
