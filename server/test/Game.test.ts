@@ -174,4 +174,24 @@ describe('A game', () => {
         
         expect(handSize - player.cards.length).to.equal(1);
     });
+    
+    it('Can stack another players +2', () => {
+        const player = game.currentPlayer;
+        const nextPlayer = game.nextPlayer;
+        const tempCard = new Card(Types.PLUS1, Colors.red, player);
+        player.cards.push(tempCard);
+
+        const tempCardTWO = new Card(Types.PLUS1, Colors.red, nextPlayer);
+        nextPlayer.cards.push(tempCardTWO);
+        const tempCardFour = new Card(Types.PLUS4, Colors.red, nextPlayer);
+        nextPlayer.cards.push(tempCardTWO);
+        
+        game.play(player.id, tempCard.id, "none");
+        game.endTurn();
+
+        game.play(nextPlayer.id, tempCardTWO.id, "none");
+        game.play(nextPlayer.id, tempCardFour.id, Colors.blue);
+        
+        expect(game.drawBuffer).to.equal(2);
+    });
 });

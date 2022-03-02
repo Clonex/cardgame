@@ -81,7 +81,7 @@ export default class Card {
         //         (lastCard.color === this.color && this.type !== "wild" && this.type !== "PLUS4" && !this.parent.didPlay));
         //     }
         return  !lastCard ||    // Empty draw pile
-                (this.parent.parent.drawBuffer > 1 && lastCard.type !== this.type) || // Player can only put down a +1/+4 card if there is something in drawBuffer
+                // (this.parent.parent.drawBuffer > 1 && lastCard.type !== this.type) || // Player can only put down a +1/+4 card if there is something in drawBuffer
                 lastCard.type === this.type || // Last card has same type as current
                 (!this.parent.didPlay && (this.type === "wild" || this.type === "PLUS4")) || // This card is a colorpicker card
                 (lastCard.color === this.color && this.type !== "wild" && this.type !== "PLUS4" && !this.parent.didPlay); // Last card has same color as current
