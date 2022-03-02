@@ -136,7 +136,7 @@ describe('A game', () => {
         const player = game.currentPlayer;
         const targetCard = player.cards.find(card => card.color != Colors.none);
 
-        const tempCard = new Card(Types.PLUS1, Colors.none, player);
+        const tempCard = new Card(Types.wild, Colors.none, player);
         player.cards.push(tempCard);
         game.play(player.id, tempCard.id, targetCard.color);
 
@@ -158,5 +158,20 @@ describe('A game', () => {
         game.endTurn();
         player.inactive();
         expect(game.currentTurn).to.equal(1);
+    });
+    
+    it('Cant play multiple different of same color', () => {
+        const player = game.currentPlayer;
+        const tempCard = new Card(Types.ONE, Colors.red, player);
+        player.cards.push(tempCard);
+
+        const tempCardTWO = new Card(Types.TWO, Colors.red, player);
+        player.cards.push(tempCardTWO);
+        
+        const handSize = player.cards.length;
+        game.play(player.id, tempCard.id, "none");
+        game.play(player.id, tempCardTWO.id, "none");
+        
+        expect(handSize - player.cards.length).to.equal(1);
     });
 });
