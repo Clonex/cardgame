@@ -5,6 +5,7 @@ import { getApp, setSize } from './get-app';
 // import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 import State from "./State";
 
+import {localStorageData} from "./classes/Player";
 import WelcomePage from "./WelcomePage";
 import GamePage from "./GamePage";
 
@@ -43,9 +44,21 @@ window.onload = () => {
       if(window.location.hash.includes("/game/"))
       {
         const id = window.location.hash.split("/game/")[1];
+        let lastPlayerID;
+        let localData = localStorage.getItem("playerData");
+        if(localData)
+        {
+          const lastPlayerData = JSON.parse(localData) as localStorageData;
+          if(lastPlayerData.gameID === id)
+          {
+            lastPlayerID = lastPlayerData.playerID;
+          }
+        }
+
         State.connection.send({
           cmd: "joinGame",
           gameID: id,
+          playerID: lastPlayerID,
         });
         page.alpha = 0;
         page.interactive = false;

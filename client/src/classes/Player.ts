@@ -2,6 +2,11 @@ import * as PIXI from "pixi.js";
 
 import Card, {PICKER_TYPES, SERVER_CARD} from "./Card";
 
+export interface localStorageData {
+    gameID: string,
+    playerID: string,
+};
+
 export default class Plauer extends PIXI.Container {
     #cards: SERVER_CARD[] = [];
 

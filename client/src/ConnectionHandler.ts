@@ -57,6 +57,10 @@ export default class ConnectionHandler {
                     console.log("huh", game);
                     game.hand.id = data.id;
                     game.id = data.gameID;
+                    localStorage.setItem("playerData", JSON.stringify({
+                        gameID: data.gameID,
+                        playerID: data.id,
+                    }));
                     this.send({
                         cmd: "getCards"
                     });
