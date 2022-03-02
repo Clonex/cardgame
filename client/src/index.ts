@@ -12,64 +12,64 @@ import GamePage from "./GamePage";
 let app: PIXI.Application;
 const loader = Loader.shared;
 
-// function startLoadingAssets(): void {
-//   // loader.add('rabbit', './assets/.png');
-//   loader.load();
-// }
+function startLoadingAssets(): void {
+  loader.add('rabbit', './assets/test.png');
+  loader.load();
+}
 
 window.onload = () => {
   app = getApp();
-  // startLoadingAssets();
+  startLoadingAssets();
   // await State.connection.onReady;
-  // loader.onComplete.once(() => {
-  const gamePage = new GamePage();
-  State.gameView = gamePage;
+  loader.onComplete.once(() => {
+    const gamePage = new GamePage();
+    State.gameView = gamePage;
 
-  const page = new WelcomePage();
+    const page = new WelcomePage();
 
-  page.onStart = () => {
-    State.connection.send({
-      cmd: "startGame"
-    });
-    page.alpha = 0;
-    page.interactive = false;
-
-    app.stage.addChild(gamePage);
-  };
-  // setTimeout(page.onStart, 100);
-
-  State.connection.onReady.then(() => {
-    app.stage.addChild(page);
-
-    if(window.location.hash.includes("/game/"))
-    {
-      const id = window.location.hash.split("/game/")[1];
-      let lastPlayerID;
-      let localData = localStorage.getItem("playerData");
-      if(localData)
-      {
-        const lastPlayerData = JSON.parse(localData) as localStorageData;
-        if(lastPlayerData.gameID === id)
-        {
-          lastPlayerID = lastPlayerData.playerID;
-        }
-      }
-
+    page.onStart = () => {
       State.connection.send({
-        cmd: "joinGame",
-        gameID: id,
-        playerID: lastPlayerID,
+        cmd: "startGame"
       });
       page.alpha = 0;
       page.interactive = false;
 
       app.stage.addChild(gamePage);
-    }
+    };
+    // setTimeout(page.onStart, 100);
 
+    State.connection.onReady.then(() => {
+      app.stage.addChild(page);
+
+      if(window.location.hash.includes("/game/"))
+      {
+        const id = window.location.hash.split("/game/")[1];
+        let lastPlayerID;
+        let localData = localStorage.getItem("playerData");
+        if(localData)
+        {
+          const lastPlayerData = JSON.parse(localData) as localStorageData;
+          if(lastPlayerData.gameID === id)
+          {
+            lastPlayerID = lastPlayerData.playerID;
+          }
+        }
+
+        State.connection.send({
+          cmd: "joinGame",
+          gameID: id,
+          playerID: lastPlayerID,
+        });
+        page.alpha = 0;
+        page.interactive = false;
+
+        app.stage.addChild(gamePage);
+      }
+
+    });
+    State.centerElems.push(page);
+    setSize();
   });
-  State.centerElems.push(page);
-  setSize();
-  // });
 
   window.gameData = {
     State,
