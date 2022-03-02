@@ -28,13 +28,16 @@ describe('A game', () => {
 
     it('Playing reverse card reverses direction', () => {
         const player = game.currentPlayer;
+        const nextPlayer = game.nextPlayer;
         const tempCard = new Card(Types.reverse, Colors.red, player);
         player.cards.push(tempCard);
 
         const lastDirection = game.direction;
         game.play(player.id, tempCard.id, "none");
+        game.endTurn();
         
         expect(lastDirection).to.not.equal(game.direction);
+        expect(nextPlayer).to.not.equal(game.nextPlayer);
     });
 
     it('Cant play card it dosent own', () => {
@@ -193,5 +196,13 @@ describe('A game', () => {
         game.play(nextPlayer.id, tempCardFour.id, Colors.blue);
         
         expect(game.drawBuffer).to.equal(2);
+    });
+    
+    it('Player must draw if they cant play anything', () => {
+        const player = game.currentPlayer;
+        const handSize = player.cards.length;
+        game.endTurn();
+        
+        expect(player.cards.length - handSize).to.equal(1);
     });
 });

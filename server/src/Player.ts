@@ -74,10 +74,11 @@ export default class Player {
     play(cardID, color)
     {
         const card = this.cards.find(card => card.id === cardID);
-        card?.play(this.parent, color);
-
-        this.didPlay = true;
-
+        if(card)
+        {
+            card.play(this.parent, color);   
+            this.didPlay = true;
+        }
         return card;
     }
 }

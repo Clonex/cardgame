@@ -39,6 +39,8 @@ export default class Game {
             temp.drawCard();
         }
 
+        temp.didDraw = false;
+
         return temp;
     }
 
