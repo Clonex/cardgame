@@ -68,7 +68,6 @@ export default class GameManager {
                 if(player)
                 {
                     const card = player.parent.play(player.id, data.cardID, data.color);
-                    
                     if(card)
                     {
                         this.trigger("playCard", player.parent, {

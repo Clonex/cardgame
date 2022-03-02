@@ -4,10 +4,14 @@ import Game from "../src/Game";
 import Card, {Types, Colors} from "../src/Card";
 
 // console.log(_chai);
-describe('Test Suite 1', () => {
+describe('A game', () => {
     let game;
     beforeEach(() => {
         game = new Game(4, 6);
+        for(let i = 0; i < 3; i++) // Populate game with players
+        {
+            game.addPlayer();
+        }
     });
 
     it('Playing card moves to next player', () => {
@@ -17,7 +21,7 @@ describe('Test Suite 1', () => {
 
         const lastTurn = game.currentTurn;
         game.play(player.id, tempCard.id, "none");
-        game.nextTurn();
+        game.endTurn();
         
         expect(game.currentTurn).to.equal(lastTurn + 1);
     });
@@ -92,6 +96,42 @@ describe('Test Suite 1', () => {
         expect(handSize).to.equal(nextPlayer.cards.length);
     });
     
+    it('+4 works correctly', () => {
+        const player = game.currentPlayer;
+        const nextPlayer = game.nextPlayer;
+
+        // Play +4 card
+        const targetCard = nextPlayer.cards.find(card => card.type !== Types.PLUS1 && card.type !== Types.wild && card.type !== Types.PLUS4);
+        const tempCard = new Card(Types.PLUS4, targetCard.color, player);
+        player.cards.push(tempCard);
+        game.play(player.id, tempCard.id, targetCard.color);
+        game.endTurn();
+
+        // Next player plays a non + card
+        const handSize = nextPlayer.cards.length;
+        game.play(nextPlayer.id, targetCard.id, "none");
+
+        expect(nextPlayer.cards.length - handSize).to.equal(3);
+    });
+    
+    it('Wild works correctly', () => {
+        const player = game.currentPlayer;
+        const nextPlayer = game.nextPlayer;
+
+        // Play wild card
+        const targetCard = nextPlayer.cards.find(card => card.type !== Types.PLUS1 && card.type !== Types.wild && card.type !== Types.PLUS4);
+        const tempCard = new Card(Types.wild, targetCard.color, player);
+        player.cards.push(tempCard);
+        game.play(player.id, tempCard.id, targetCard.color);
+        game.endTurn();
+
+        // Next player plays a non + card
+        const handSize = nextPlayer.cards.length;
+        game.play(nextPlayer.id, targetCard.id, "none");
+
+        expect(handSize - nextPlayer.cards.length).to.equal(1);
+    });
+    
     it('Normal cards dont stack after wild cards', () => {
         const player = game.currentPlayer;
         const targetCard = player.cards.find(card => card.color != Colors.none);
@@ -104,5 +144,19 @@ describe('Test Suite 1', () => {
         game.play(player.id, targetCard.id, "none");
 
         expect(handSize).to.equal(player.cards.length);
+    });
+    
+    it('inactive() and active() works correctly', () => {
+        const player = game.currentPlayer;
+        player.inactive();
+
+        expect(game._inactivePlayers.length).to.equal(1);
+        player.activate();
+
+        expect(game._inactivePlayers.length).to.equal(0);
+
+        game.endTurn();
+        player.inactive();
+        expect(game.currentTurn).to.equal(1);
     });
 });
