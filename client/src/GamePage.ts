@@ -19,6 +19,7 @@ export default class GamePage extends PIXI.Container {
     #buttonContainer = new PIXI.Container();
     #drawButton = new Button("Draw", 0xFFFFFF, 0x333333);
     #endTurn = new Button("End turn", 0xFFFFFF, 0x333333);
+    #unoButton = new Button("Last card!", 0xFFFFFF, 0x333333);
 
     #currentTurn = "0";
 
@@ -29,14 +30,19 @@ export default class GamePage extends PIXI.Container {
         this.hand = new Hand("");
 
         this.#endTurn.x = this.#drawButton.width + 20;
+        this.#unoButton.x = this.#endTurn.x + this.#endTurn.width + 20;
 
-        this.#buttonContainer.addChild(this.#endTurn, this.#drawButton);
+        this.#buttonContainer.addChild(this.#endTurn, this.#drawButton, this.#unoButton);
 
         this.#drawButton.on("pointerdown", () => {
             State.connection.send({
                 cmd: "drawCard"
             });
         });
+
+        this.#unoButton.on("pointerdown", () => State.connection.send({
+            cmd: "lastCard"
+        }));
 
         this.#endTurn.on("pointerdown", () => {
             State.connection.send({
@@ -83,6 +89,35 @@ export default class GamePage extends PIXI.Container {
             this.#drawButton.interactive = false;
             this.#endTurn.interactive = false;
             this.#buttonContainer.alpha = 0.2;
+
+            const player = this.getPlayer(playerID);
+            Object.values(this.#players).forEach(player => {
+                player.showBackground(player.id === playerID);
+            });
+        }
+    }
+
+    joinGame()
+    {
+        if(window.location.hash.includes("/game/"))
+        {
+            const id = window.location.hash.split("/game/")[1];
+            let lastPlayerID;
+            let localData = localStorage.getItem("playerData");
+            if(localData)
+            {
+                const lastPlayerData = JSON.parse(localData) as localStorageData;
+                if(lastPlayerData.gameID === id)
+                {
+                    lastPlayerID = lastPlayerData.playerID;
+                }
+            }
+
+            State.connection.send({
+                cmd: "joinGame",
+                gameID: id,
+                playerID: lastPlayerID,
+            });
         }
     }
 

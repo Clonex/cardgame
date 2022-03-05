@@ -11,6 +11,7 @@ export default class Plauer extends PIXI.Container {
     #cards: SERVER_CARD[] = [];
 
     readonly cardContainer = new PIXI.Container();
+    readonly background = new PIXI.Graphics();
     id;
 
     constructor(id: string)
@@ -18,8 +19,8 @@ export default class Plauer extends PIXI.Container {
         super();
 
         this.id = id;
-
-        this.addChild(this.cardContainer);
+        this.background.visible = false;
+        this.addChild(this.background, this.cardContainer);
     }
 
 
@@ -35,5 +36,13 @@ export default class Plauer extends PIXI.Container {
 
             this.cardContainer.addChild(cardElem);
         });
+
+        this.background.clear();
+        this.background.beginFill(0xFFFFFF, 0.5).drawRoundedRect(-10, -10, this.cardContainer.width + 20, this.cardContainer.height + 20, 10);
+    }
+
+    showBackground(visible: boolean)
+    {
+        this.background.visible = visible;
     }
 };

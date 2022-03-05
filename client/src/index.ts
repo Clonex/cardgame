@@ -43,23 +43,7 @@ window.onload = () => {
 
       if(window.location.hash.includes("/game/"))
       {
-        const id = window.location.hash.split("/game/")[1];
-        let lastPlayerID;
-        let localData = localStorage.getItem("playerData");
-        if(localData)
-        {
-          const lastPlayerData = JSON.parse(localData) as localStorageData;
-          if(lastPlayerData.gameID === id)
-          {
-            lastPlayerID = lastPlayerData.playerID;
-          }
-        }
-
-        State.connection.send({
-          cmd: "joinGame",
-          gameID: id,
-          playerID: lastPlayerID,
-        });
+        gamePage.joinGame();
         page.alpha = 0;
         page.interactive = false;
 

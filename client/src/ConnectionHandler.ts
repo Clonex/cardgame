@@ -17,7 +17,14 @@ export default class ConnectionHandler {
     {
         this.ws = new WebSocket(SERVER_IP);
         this.ws.onopen = () => this.#onReady();
-        this.ws.onclose = () => setTimeout(() => this.openConnection(), 200);
+        this.ws.onclose = () => setTimeout(() => {
+            // this.#connectionPromises.push(() => {
+            //     State.gameView.joinGame();
+            // });
+            // this.openConnection();
+            location.reload();
+
+        }, 200);
         this.ws.onmessage = data => this.#data(data);
     }
 

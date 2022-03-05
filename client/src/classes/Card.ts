@@ -35,7 +35,7 @@ export const TYPE_NAME = {
     "reverse": "↪",
     "skip": "SKIP",
     "wild": "WILD",
-    "PLUS1": "+1",
+    "PLUS1": "+2",
     "PLUS4": "+4",
 };
 
