@@ -85,15 +85,12 @@ export default class GamePage extends PIXI.Container {
             this.#drawButton.interactive = true;
             this.#endTurn.interactive = true;
             this.#buttonContainer.alpha = 1;
+            Object.values(this.#players).forEach(player => player.showBackground(false));
         }else{
             this.#drawButton.interactive = false;
             this.#endTurn.interactive = false;
             this.#buttonContainer.alpha = 0.2;
-
-            const player = this.getPlayer(playerID);
-            Object.values(this.#players).forEach(player => {
-                player.showBackground(player.id === playerID);
-            });
+            Object.values(this.#players).forEach(player => player.showBackground(player.id === playerID));
         }
     }
 

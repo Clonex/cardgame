@@ -10,12 +10,35 @@ export default class Player {
     parent: Game;
     didDraw = false;
     didPlay = false;
+    calledLastCard = false;
 
     connection;
 
     constructor(game)
     {
         this.parent = game;
+    }
+
+    calledLast(val)
+    {
+        if(val === true && this.cards.length > 2)
+        {
+            this.drawCardAmount(2);
+            return;
+        }
+        this.calledLastCard = val;
+    }
+
+    drawCardAmount(amount)
+    {
+        const lastDidDraw = this.didDraw;
+        const lastDrawBuffer = this.parent.drawBuffer;
+        
+        this.parent.drawBuffer = amount;
+        this.drawCard();
+
+        this.didDraw = lastDidDraw;
+        this.parent.drawBuffer = lastDrawBuffer;
     }
 
     drawCard()
@@ -69,6 +92,7 @@ export default class Player {
     {
         this.didPlay = false;
         this.didDraw = false;
+        this.calledLastCard = false;
     }
 
     play(cardID, color)
@@ -78,6 +102,11 @@ export default class Player {
         {
             card.play(this.parent, color);   
             this.didPlay = true;
+
+            if(this.cards.length === 1 && this.calledLastCard) // Didnt call last card
+            {
+                this.drawCardAmount(2);
+            }
         }
         return card;
     }

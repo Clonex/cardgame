@@ -81,6 +81,15 @@ export default class GameManager {
                 }
             }
             break;
+            case "lastCard":
+            {
+                const player = conn.player;
+                if(player && player.parent.currentPlayer === player)
+                {
+                    player.calledLast(true);
+                }
+            }
+            break;
             case "endTurn":
             {
                 const player = conn.player;

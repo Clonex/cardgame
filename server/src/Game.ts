@@ -97,6 +97,12 @@ export default class Game {
                 this.currentTurn = this._players.length - this.turnIncrementSize;
             }
         }
+
+        const playersNotDone = this._players.filter(player => player.cards.length > 0);
+        if(this.currentPlayer.cards.length === 0 && playersNotDone.length > 1)
+        {
+            this.nextTurn();
+        }
     }
 
     get nextPlayer()
