@@ -21,7 +21,7 @@ export default class Player {
 
     calledLast(val)
     {
-        if(val === true && this.cards.length > 2)
+        if(val === true && this.cards.length !== 2)
         {
             this.drawCardAmount(2);
             return;
@@ -103,7 +103,7 @@ export default class Player {
             card.play(this.parent, color);   
             this.didPlay = true;
 
-            if(this.cards.length === 1 && this.calledLastCard) // Didnt call last card
+            if(this.cards.length === 1 && !this.calledLastCard) // Didnt call last card
             {
                 this.drawCardAmount(2);
             }

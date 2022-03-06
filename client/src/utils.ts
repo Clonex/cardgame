@@ -1,4 +1,4 @@
-export const SERVER_IP = process.env.NODE_ENV === "production" || 1 ? "wss://cardapi.clonex.dk" : "ws://localhost:8080";
+export const SERVER_IP = process.env.NODE_ENV === "production"  ? "wss://cardapi.clonex.dk" : "ws://localhost:8080";
 
 import * as PIXI from "pixi.js";
 import {TimedAnimation} from "./classes/animation";

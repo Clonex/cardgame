@@ -205,4 +205,33 @@ describe('A game', () => {
         
         expect(player.cards.length - handSize).to.equal(1);
     });
+    
+    it('Player will get 2 extra cards if they forget to call last card', () => {
+        const player = game.currentPlayer;
+        player.cards = [];
+        
+        const tempCard = new Card(Types.ONE, Colors.red, player);
+        player.cards.push(tempCard);
+        const tempCardExtra = new Card(Types.ONE, Colors.red, player);
+        player.cards.push(tempCardExtra);
+
+        game.play(player.id, tempCard.id);
+        
+        expect(player.cards.length).to.equal(3);
+    });
+    
+    it('Player can play second last card when calling last card', () => {
+        const player = game.currentPlayer;
+        player.cards = [];
+        
+        const tempCard = new Card(Types.ONE, Colors.red, player);
+        player.cards.push(tempCard);
+        const tempCardExtra = new Card(Types.ONE, Colors.red, player);
+        player.cards.push(tempCardExtra);
+
+        player.calledLast(true);
+        game.play(player.id, tempCard.id);
+        
+        expect(player.cards.length).to.equal(1);
+    });
 });
