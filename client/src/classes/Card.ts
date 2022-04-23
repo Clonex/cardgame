@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 
+import {TimedAnimation} from "./animation";
 
 export type Types = "none" | "ZERO" | "ONE" | "TWO" | "THREE" | "FOUR" | "FIVE" | "SIX" | "SEVEN" | "EIGHT" | "NINE" | "reverse" | "skip" | "wild" | "PLUS1" | "PLUS4";
 export type Colors = "red" | "blue" | "green" | "yellow" | "none";
@@ -46,10 +47,14 @@ export default class Card extends PIXI.Container {
 
     static CORNER_W = 30;
     static CORNER_H = 50;
+
+    id = "";
     
-    constructor(type: Types, color: Colors)
+    constructor(type: Types, color: Colors, id: string)
     {
         super();
+
+        this.id = id;
 
         const bg = new PIXI.Graphics();
         bg.beginFill(0x000000, 0.1).drawRoundedRect(0, 0, Card.WIDHT + Card.OUTLINE, Card.HEIGHT + Card.OUTLINE, 5).endFill();
@@ -86,5 +91,23 @@ export default class Card extends PIXI.Container {
         text.x = Card.WIDHT / 2;
 
         this.addChild(bg, text);
+    }
+
+    moveToHand()
+    {
+        const {x: startX, y: startY} = this;
+        const diffY = 0 - this.y;
+        const diffX = this.homeX - this.x;
+        TimedAnimation.run((progress: number) => {
+            this.x = (diffX * progress) + startX;
+            this.y = (diffY * progress) + startY;
+        }, 50);
+    }
+
+    homeX = 0;
+    setHomeX(x: number)
+    {
+        this.x = x;
+        this.homeX = x;
     }
 };

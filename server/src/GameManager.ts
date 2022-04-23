@@ -24,6 +24,7 @@ export default class GameManager {
 
     killConnection(conn)
     {
+        console.log("Someonw left..");
         if(conn.player)
         {
             const player = conn.player;
@@ -77,6 +78,11 @@ export default class GameManager {
                         });
                         this.trigger("getCards", player.parent);
                         this.trigger("cardStack", player.parent);
+                    }else{
+                        this.send({
+                            cmd: "playFailed",
+                            cardID: data.cardID,
+                        }, conn);
                     }
                 }
             }

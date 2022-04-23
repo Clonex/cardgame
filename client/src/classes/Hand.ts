@@ -8,20 +8,21 @@ import {draggable, isWithin} from "../utils";
 import {TimedAnimation} from "./animation";
 
 export default class Hand extends Player {
-    #cards: SERVER_CARD[] = [];
+    lastCardPlayed?: SERVER_CARD;
 
     setCards(cards: SERVER_CARD[])
     {
         this.cardContainer.removeChildren();
-        this.#cards = cards;
+        this.cards = cards;
 
-        this.#cards.forEach((card, i) => {
+        this.cardElems = [];
+        this.cards.forEach((card, i) => {
             const IS_PICK = PICKER_TYPES.includes(card.type ?? "none");
-            const cardElem = new Card(card.type ?? "none", IS_PICK ? "none" : (card?.color ?? "none"));
+            const cardElem = new Card(card.type ?? "none", IS_PICK ? "none" : (card?.color ?? "none"), card.id);
             let timeout:NodeJS.Timeout;
             const x = i * cardElem.width;
             cardElem.cursor = "pointer";
-            cardElem.x = x;
+            cardElem.setHomeX(x);
             cardElem.on("pointerdown", () => {
                 this.#sortCard(cardElem);
                 cardElem.alpha = 0.5;
@@ -42,6 +43,7 @@ export default class Hand extends Player {
                 cardElem.alpha = 1;
                 if(isWithin(cardElem, State.gameView.cardStack))
                 {
+                    this.lastCardPlayed = card;
                     let color = undefined;
                     if(IS_PICK)
                     {
@@ -53,20 +55,13 @@ export default class Hand extends Player {
                         color,
                     });
                 }else{
-                    timeout = setTimeout(() => {
-                        const {x: startX, y: startY} = cardElem;
-                        const diffY = 0 - cardElem.y;
-                        const diffX = x - cardElem.x;
-                        TimedAnimation.run((progress: number) => {
-                            cardElem.x = (diffX * progress) + startX;
-                            cardElem.y = (diffY * progress) + startY;
-                        }, 50);
-                    }, 200);
+                    timeout = setTimeout(() => cardElem.moveToHand(), 200);
                 }
             });
 
             draggable<Card>(cardElem);
             this.cardContainer.addChild(cardElem);
+            this.cardElems.push(cardElem);
         });
     }
 
@@ -83,4 +78,5 @@ export default class Hand extends Player {
             return 0;
         });
     }
+
 };

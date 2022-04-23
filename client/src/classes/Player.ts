@@ -8,7 +8,8 @@ export interface localStorageData {
 };
 
 export default class Plauer extends PIXI.Container {
-    #cards: SERVER_CARD[] = [];
+    cards: SERVER_CARD[] = [];
+    cardElems: Card[] = [];
 
     readonly cardContainer = new PIXI.Container();
     readonly background = new PIXI.Graphics();
@@ -23,18 +24,19 @@ export default class Plauer extends PIXI.Container {
         this.addChild(this.background, this.cardContainer);
     }
 
-
     setCards(cards: SERVER_CARD[])
     {
         this.cardContainer.removeChildren();
-        this.#cards = cards;
+        this.cards = cards;
 
-        this.#cards.forEach((card, i) => {
+        this.cardElems = [];
+        this.cards.forEach((card, i) => {
             const IS_PICK = PICKER_TYPES.includes(card.type ?? "none");
-            const cardElem = new Card(card.type ?? "none", IS_PICK ? "none" : (card.color ?? "none"));
+            const cardElem = new Card(card.type ?? "none", IS_PICK ? "none" : (card.color ?? "none"), card.id);
             cardElem.x = i * (cardElem.width * 0.2);
 
             this.cardContainer.addChild(cardElem);
+            this.cardElems.push(cardElem);
         });
 
         this.background.clear();
@@ -44,5 +46,11 @@ export default class Plauer extends PIXI.Container {
     showBackground(visible: boolean)
     {
         this.background.visible = visible;
+    }
+
+    getCardElem(id: string)
+    {
+        console.log("Yo", id, this.cardElems);
+        return this.cardElems.find(card => card.id === id);
     }
 };
