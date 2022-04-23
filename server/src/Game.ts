@@ -7,6 +7,8 @@ export default class Game {
     currentTurn: number = 0;
     _players: Player[] = [];
     _inactivePlayers = [];
+    active = true;
+
     cardStack: Card[] = [];
 
     direction: "left"|"right" = "left";
@@ -47,7 +49,7 @@ export default class Game {
     play(playerID, cardID, color)
     {
         const player = this.getPlayer(playerID);
-        if(this.currentTurn === this._players.indexOf(player) && player && this._players.length > 1)
+        if(this.currentTurn === this._players.indexOf(player) && player && this._players.length > 1 && this.active)
         {
             if(this.drawBuffer > 1 && !player.didPlay)
             {
@@ -102,6 +104,9 @@ export default class Game {
         if(this.currentPlayer.cards.length === 0 && playersNotDone.length > 1)
         {
             this.nextTurn();
+        }else if(playersNotDone.length <= 1) // Only 1 player left, end game
+        {
+            this.active = false;
         }
     }
 

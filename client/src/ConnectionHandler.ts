@@ -91,10 +91,8 @@ export default class ConnectionHandler {
                 game.cardStack.setCards(data.stack);
             break;
             case "playFailed":
-                console.log(game.hand);
                 const card = game.hand.getCardElem(data.cardID);
                 card?.moveToHand();
-                // game.cardStack.setCards(data.stack);
             break;
         }
     }
