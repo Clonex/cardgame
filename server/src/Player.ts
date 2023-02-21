@@ -58,12 +58,12 @@ export default class Player {
         return temp;
     }
 
-    getCard(cardID):Card|undefined
+    getCard(cardID: string):Card|undefined
     {
         return this.cards.find(card => card.id === cardID);
     }
 
-    removeCard(card)
+    removeCard(card: Card)
     {
         this.cards = this.cards.filter(d => d !== card);
     }
@@ -95,7 +95,7 @@ export default class Player {
         this.calledLastCard = false;
     }
 
-    play(cardID, color)
+    play(cardID: string, color: Colors)
     {
         const card = this.cards.find(card => card.id === cardID);
         if(card)

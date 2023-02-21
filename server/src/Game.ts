@@ -1,12 +1,12 @@
 import uid from "uid-safe";
 import Player from "./Player";
-import Card from "./Card";
+import Card, {Colors} from "./Card";
 
 export default class Game {
     id = uid.sync(18);
     currentTurn: number = 0;
     _players: Player[] = [];
-    _inactivePlayers = [];
+    _inactivePlayers: Player[] = [];
     active = true;
 
     cardStack: Card[] = [];
@@ -46,7 +46,7 @@ export default class Game {
         return temp;
     }
 
-    play(playerID, cardID, color)
+    play(playerID: string, cardID: string, color: Colors)
     {
         const player = this.getPlayer(playerID);
         if(this.currentTurn === this._players.indexOf(player) && player && this._players.length > 1 && this.active)
@@ -70,7 +70,7 @@ export default class Game {
         }
     }
 
-    getPlayer(playerID, inactive = false): Player|undefined
+    getPlayer(playerID: string, inactive = false): Player|undefined
     {
         const target = inactive ? this._inactivePlayers : this._players;
         return target.find(player => player.id === playerID);
