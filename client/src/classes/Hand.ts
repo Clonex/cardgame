@@ -1,13 +1,13 @@
 import * as PIXI from "pixi.js";
 
-import Card, {PICKER_TYPES, SERVER_CARD} from "./Card";
-import Player from "./Player";
+import {Card, PICKER_TYPES, SERVER_CARD, Colors} from "./Card";
+import {Player} from "./Player";
 import State from "../State";
 
 import {draggable, isWithin} from "../utils";
 import {TimedAnimation} from "./animation";
 
-export default class Hand extends Player {
+export class Hand extends Player {
     lastCardPlayed?: SERVER_CARD;
 
     setCards(cards: SERVER_CARD[])
@@ -44,7 +44,7 @@ export default class Hand extends Player {
                 if(isWithin(cardElem, State.gameView.cardStack))
                 {
                     this.lastCardPlayed = card;
-                    let color = undefined;
+                    let color: Colors|undefined;
                     if(IS_PICK)
                     {
                         color = await State.colorPicker.open();

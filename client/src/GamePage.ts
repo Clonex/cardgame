@@ -1,17 +1,14 @@
 import * as PIXI from "pixi.js";
 
 import State from "./State";
-
-import Button from "./classes/Button";
-import Hand from "./classes/Hand";
-import Player from "./classes/Player";
-import CardStack from "./classes/CardStack";
+import {CardStack, Player, Hand, Button, SERVER_CARD} from "./classes";
+import { localStorageData } from "./classes/Player";
 
 export default class GamePage extends PIXI.Container {
     readonly cardStack = new CardStack();
     id = "0";
 
-    readonly hand;
+    readonly hand = new Hand("");
     #players: {[key: string]: Player} = {};
 
 
@@ -26,8 +23,6 @@ export default class GamePage extends PIXI.Container {
     constructor()
     {
         super();
-
-        this.hand = new Hand("");
 
         this.#endTurn.x = this.#drawButton.width + 20;
         this.#unoButton.x = this.#endTurn.x + this.#endTurn.width + 20;
@@ -57,7 +52,7 @@ export default class GamePage extends PIXI.Container {
         this.setTurn("n");
     }
 
-    setCards(id: string, cards)
+    setCards(id: string, cards: SERVER_CARD[])
     {
         let player = this.getPlayer(id);
         if(!player)
@@ -72,7 +67,7 @@ export default class GamePage extends PIXI.Container {
         this.updatePosition();
     }
 
-    getPlayer(id)
+    getPlayer(id: string)
     {
         return this.#players[id];
     }

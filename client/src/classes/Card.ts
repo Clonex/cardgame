@@ -40,7 +40,7 @@ export const TYPE_NAME = {
     "PLUS4": "+4",
 };
 
-export default class Card extends PIXI.Container {
+export class Card extends PIXI.Container {
     static HEIGHT = 200;
     static WIDHT = 120;
     static OUTLINE = 3;

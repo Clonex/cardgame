@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 
-import Card from "./Card";
+import {Card} from "./Card";
 import State from "../State";
 import {TimedAnimation} from "./animation";
 import {COLORS, Colors} from "./Card";
@@ -14,7 +14,7 @@ export default class ColorPicker extends PIXI.Container {
     visible = false;
     interactive = true;
 
-    #resolve;
+    #resolve?: (color: Colors) => void;
 
     constructor()
     {
@@ -28,7 +28,7 @@ export default class ColorPicker extends PIXI.Container {
         for(let i = 1; i < colorArr.length; i++)
         {
             const color: Colors = colorArr[i] as Colors;
-            const temp = new Card("wild", color);
+            const temp = new Card("wild", color, '');
             temp.scale.set(1.2);
             temp.interactive = true;
             temp.cursor = "pointer";
@@ -36,7 +36,7 @@ export default class ColorPicker extends PIXI.Container {
             temp.on("pointerout", () => scaleTo(1.2, temp, 100));
             temp.on("pointerdown", () => {
                 this.hide();
-                this.#resolve(color);
+                this.#resolve?.(color);
             });
 
             temp.y = 20;
@@ -53,7 +53,7 @@ export default class ColorPicker extends PIXI.Container {
 
     open()
     {
-        return new Promise(r => {
+        return new Promise<Colors>(r => {
             this.#resolve = r;
             this.show();
         });

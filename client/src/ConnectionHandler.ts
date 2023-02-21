@@ -5,7 +5,7 @@ import State from "./State";
 
 export default class ConnectionHandler {
     ws?:WebSocket;
-    #connectionPromises = [];
+    #connectionPromises: ((value: boolean) => void)[] = [];
     pingInterval?: NodeJS.Timeout;
 
     constructor()
@@ -40,7 +40,7 @@ export default class ConnectionHandler {
         this.pingInterval = setInterval(() =>  this.send({cmd: "ping"}), 1000 * 60 * 2);
     }
 
-    #data(d)
+    #data(d: unknown)
     {
         const data = JSON.parse(d.data);
         const game = State.gameView;
@@ -99,7 +99,7 @@ export default class ConnectionHandler {
 
     get onReady()
     {
-        return new Promise(r => {
+        return new Promise<boolean>(r => {
             if(this.ws?.readyState === 1)
             {
                 r(true);

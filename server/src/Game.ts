@@ -112,7 +112,7 @@ export default class Game {
 
     get nextPlayer()
     {
-        this.nextTurn(); // Hacky method?? Go to next player and save it, then go back to the last player
+        this.nextTurn(); // Hacky method?? Goes to next player and save it, then go back to the last player
         const player = this.currentPlayer;
         this.direction = this.direction === "left" ? "right" : "left";
         this.nextTurn();
