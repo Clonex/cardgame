@@ -11,6 +11,8 @@
 		"server"
 	],
 	"scripts": {
+		"clean": "yarn workspaces run clean",
+		"clean:modules": "rm -rf node_modules/ ./*/node_modules",
 		"lint": "eslint */**/*.ts",
 		"lint:fix": "eslint */**/*.ts --fix"
 	},
@@ -26,5 +28,9 @@
 		"useTabs": true,
 		"singleQuote": true,
 		"tabWidth": 2
+	},
+	"devDependencies": {
+		"punycode": "^1.4.1",
+		"querystring-es3": "^0.2.1"
 	}
 }

@@ -29,10 +29,9 @@ jobs:
       working-directory: ./client
       run: yarn
     
-    - name: Terser fix
-      continue-on-error: true
-      # working-directory: ./client
-      run: cp ./node_modules/terser/dist/bundle.js ./node_modules/terser/dist/bundle.min.js
+    # - name: Terser fix
+    #   continue-on-error: true
+    #   run: cp ./node_modules/terser/dist/bundle.js ./node_modules/terser/dist/bundle.min.js
     
     - name: Build project
       continue-on-error: true
