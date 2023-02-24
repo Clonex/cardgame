@@ -70,7 +70,12 @@ export default class Animation {
  */
 export class ReversingAnimation extends Animation {
 	_animationTime = 0;
-	_revJob: (progress: number, dir: number) => {};
+	_revJob: (
+		progress: number,
+		dir: number
+	) => {
+		//
+	};
 
 	last = 0;
 	dir = 0;
