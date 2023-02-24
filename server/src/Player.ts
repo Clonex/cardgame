@@ -1,8 +1,8 @@
-import uid from "uid-safe";
-import Card from "./Card";
-import Game from "./Game";
-import {Types, Colors} from "./Card";
-import {randomEnumValue} from "./utils";
+import uid from 'uid-safe';
+import Card from './Card';
+import Game from './Game';
+import { Types, Colors } from './Card';
+import { randomEnumValue } from './utils';
 
 export default class Player {
 	id = uid.sync(18);
@@ -14,26 +14,22 @@ export default class Player {
 
 	connection;
 
-	constructor(game)
-	{
+	constructor(game) {
 		this.parent = game;
 	}
 
-	calledLast(val)
-	{
-		if(val === true && this.cards.length !== 2)
-		{
+	calledLast(didCall: boolean) {
+		if (didCall === true && this.cards.length !== 2) {
 			this.drawCardAmount(2);
 			return;
 		}
-		this.calledLastCard = val;
+		this.calledLastCard = didCall;
 	}
 
-	drawCardAmount(amount)
-	{
+	drawCardAmount(amount: number) {
 		const lastDidDraw = this.didDraw;
 		const lastDrawBuffer = this.parent.drawBuffer;
-        
+
 		this.parent.drawBuffer = amount;
 		this.drawCard();
 
@@ -41,15 +37,13 @@ export default class Player {
 		this.parent.drawBuffer = lastDrawBuffer;
 	}
 
-	drawCard()
-	{
+	drawCard() {
 		let temp;
-		for(let i = 0; i < this.parent.drawBuffer; i++)
-		{
+		for (let i = 0; i < this.parent.drawBuffer; i++) {
 			const type = randomEnumValue(Types);
 			const color = randomEnumValue(Colors, 1);
 			temp = new Card(type, color, this);
-            
+
 			this.cards.push(temp);
 			this.didDraw = true;
 		}
@@ -58,53 +52,53 @@ export default class Player {
 		return temp;
 	}
 
-	getCard(cardID: string):Card|undefined
-	{
-		return this.cards.find(card => card.id === cardID);
+	getCard(cardID: string): Card | undefined {
+		return this.cards.find((card) => card.id === cardID);
 	}
 
-	removeCard(card: Card)
-	{
-		this.cards = this.cards.filter(d => d !== card);
+	removeCard(card: Card) {
+		this.cards = this.cards.filter((d) => d !== card);
 	}
 
-	inactive()
-	{
-		if(this.parent._players.some(player => player.id === this.id))
-		{
+	inactive() {
+		if (this.parent._players.some((player) => player.id === this.id)) {
 			const currPlayer = this.parent.currentPlayer;
-			this.parent._players = this.parent._players.filter(player => player.id !== this.id);
-			this.parent.currentTurn = currPlayer.id === this.id ? this.parent.currentTurn : this.parent._players.findIndex(player => currPlayer.id === player.id);
+			this.parent._players = this.parent._players.filter(
+				(player) => player.id !== this.id
+			);
+			this.parent.currentTurn =
+				currPlayer.id === this.id
+					? this.parent.currentTurn
+					: this.parent._players.findIndex(
+							(player) => currPlayer.id === player.id
+					  );
 			this.parent._inactivePlayers.push(this);
 		}
 	}
 
-	activate()
-	{
-		if(this.parent._inactivePlayers.some(player => player.id === this.id))
-		{
-			this.parent._inactivePlayers = this.parent._inactivePlayers.filter(player => player.id !== this.id);
+	activate() {
+		if (this.parent._inactivePlayers.some((player) => player.id === this.id)) {
+			this.parent._inactivePlayers = this.parent._inactivePlayers.filter(
+				(player) => player.id !== this.id
+			);
 			this.parent._players.push(this);
 		}
 	}
 
-	turnReset()
-	{
+	turnReset() {
 		this.didPlay = false;
 		this.didDraw = false;
 		this.calledLastCard = false;
 	}
 
-	play(cardID: string, color: Colors)
-	{
-		const card = this.cards.find(card => card.id === cardID);
-		if(card)
-		{
-			card.play(this.parent, color);   
+	play(cardID: string, color: Colors) {
+		const card = this.cards.find((card) => card.id === cardID);
+		if (card) {
+			card.play(this.parent, color);
 			this.didPlay = true;
 
-			if(this.cards.length === 1 && !this.calledLastCard) // Didnt call last card
-			{
+			if (this.cards.length === 1 && !this.calledLastCard) {
+				// Didnt call last card
 				this.drawCardAmount(2);
 			}
 		}
