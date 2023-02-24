@@ -23,6 +23,9 @@ jobs:
         node-version: 16.x
     
     - name: Install all NPM packages
+      run: yarn
+    
+    - name: Install all client packages
       working-directory: ./client
       run: yarn
     
