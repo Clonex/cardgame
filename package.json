@@ -1,0 +1,24 @@
+{
+	"name": "cardgame",
+	"version": "1.0.0",
+	"main": "index.js",
+	"private": true,
+	"repository": "https://github.com/Clonex/cardgame.git",
+	"author": "Michael Salling <clonex_kontakt@hotmail.com>",
+	"license": "MIT",
+	"workspaces": [
+		"client",
+		"server"
+	],
+	"scripts": {
+		"lint": "eslint */**/*.ts",
+		"lint:fix": "eslint */**/*.ts --fix"
+	},
+	"dependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.53.0",
+		"@typescript-eslint/parser": "^5.53.0",
+		"eslint": "^8.34.0",
+		"eslint-config-prettier": "^8.6.0",
+		"prettier": "^2.8.4"
+	}
+}

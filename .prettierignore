@@ -1,0 +1,10 @@
+node_modules
+.ci
+.editorconfig
+Dockerfile
+*.yml
+*.yaml
+*.sh
+*.lock
+.*ignore
+*.log
