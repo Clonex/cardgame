@@ -1,16 +1,18 @@
-import * as PIXI from "pixi.js";
+import { Container, utils } from 'pixi.js';
 
-import ConnectionHandler from "./ConnectionHandler";
-import GamePage from "./GamePage";
-import ColorPicker from "./classes/ColorPicker";
+import ConnectionHandler from './ConnectionHandler';
+import { GamePage } from './pages';
+import ColorPicker from './classes/ColorPicker';
+import { Game } from './Game';
 
 export default class State {
+	static game = new Game();
 	static gameID: string;
 
-	static centerElems: PIXI.Container[] = [];
+	static centerElems: Container[] = [];
 
 	static connection = new ConnectionHandler();
-	static events = new PIXI.utils.EventEmitter();
+	static events = new utils.EventEmitter();
 
 	static gameView: GamePage;
 	static colorPicker = new ColorPicker();
