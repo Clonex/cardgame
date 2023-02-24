@@ -1,26 +1,26 @@
 
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 
 import Button from "./classes/Button";
 
 export default class WelcomePage extends PIXI.Container {
-    title = new PIXI.Text("Welcome!", {
-        fontSize: 50,
-        fontFamily: "arial",
-        fill: 0xFFFFFF,
-        fontWeight: "bolder",
-    });
-    onStart = () => {};
+	title = new PIXI.Text("Welcome!", {
+		fontSize: 50,
+		fontFamily: "arial",
+		fill: 0xFFFFFF,
+		fontWeight: "bolder",
+	});
+	onStart = () => {};
 
-    constructor()
-    {
-        super();
+	constructor()
+	{
+		super();
 
-        const joinBtn = new Button("New game", 0xFFFFFF, 0xffb100);
-        joinBtn.on("pointerdown", () => this.onStart());
+		const joinBtn = new Button("New game", 0xFFFFFF, 0xffb100);
+		joinBtn.on("pointerdown", () => this.onStart());
 
-        joinBtn.y = this.title.height + 20;
-        joinBtn.x = (this.title.width / 2) - (joinBtn.width / 2);
-        this.addChild(this.title, joinBtn);
-    }
-};
+		joinBtn.y = this.title.height + 20;
+		joinBtn.x = (this.title.width / 2) - (joinBtn.width / 2);
+		this.addChild(this.title, joinBtn);
+	}
+}
