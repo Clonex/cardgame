@@ -3,6 +3,64 @@ import * as PIXI from 'pixi.js';
 import State from '../State';
 import { CardStack, Player, Hand, Button, SERVER_CARD } from '../classes';
 import { localStorageData } from '../classes/Player';
+import { debounce, throttle } from 'lodash';
+import stringToColor from 'string-to-color';
+
+class CursorScreen extends PIXI.Graphics {
+	positions: {
+		[key: string]: {
+			x: number;
+			y: number;
+			color: number;
+			visible: boolean;
+			interval?: NodeJS.Timer;
+		};
+	} = {};
+
+	constructor() {
+		super();
+	}
+
+	cursorTick(playerId: string, x: number, y: number) {
+		const position = this.positions[playerId] ?? {
+			x: 0,
+			y: 0,
+			visible: true,
+			color: PIXI.utils.string2hex(stringToColor(playerId)),
+		};
+
+		if (position?.interval) {
+			clearTimeout(position.interval);
+		}
+
+		position.visible = true;
+		position.x = x;
+		position.y = y;
+		position.interval = setInterval(() => {
+			position.visible = false;
+			this.tick();
+		}, 500);
+
+		this.positions[playerId] = position;
+		this.tick();
+	}
+
+	tick() {
+		this.clear();
+
+		const IDs = Object.keys(this.positions);
+		for (const id of IDs) {
+			const position = this.positions[id];
+			if (position.visible) {
+				this.beginFill(position.color, 0.5)
+					.drawCircle(position.x, position.y, 12)
+					.beginFill(position.color)
+					.drawCircle(position.x, position.y, 10)
+					.endFill();
+			}
+		}
+	}
+}
 
 export class GamePage extends PIXI.Container {
 	readonly cardStack = new CardStack();
@@ -19,7 +77,8 @@ export class GamePage extends PIXI.Container {
 
 	#currentTurn = '0';
 	interactive = true;
-	#debugBackground = new PIXI.Graphics();
+	#background = new PIXI.Graphics();
+	cursorScreen = new CursorScreen();
 
 	constructor() {
 		super();
@@ -52,13 +111,26 @@ export class GamePage extends PIXI.Container {
 		});
 
 		this.addChild(
-			this.#debugBackground,
+			this.#background,
 			this.cardStack,
+			this.cursorScreen,
 			this.#buttonContainer,
 			this.#playerContainer,
 			this.hand,
 			State.colorPicker
 		);
+
+		const updateMousePos = throttle((e) => {
+			if (this.id !== '0') {
+				const { x, y } = e.screen;
+				State.connection.send({
+					cmd: 'cursor',
+					x,
+					y,
+				});
+			}
+		}, 100);
+		this.on('pointermove', updateMousePos);
 
 		State.events.on('resize', () => this.updatePosition());
 		this.updatePosition();
@@ -166,7 +238,7 @@ export class GamePage extends PIXI.Container {
 			player.y = position.y;
 		}
 
-		this.#debugBackground
+		this.#background
 			.clear()
 			.beginFill(0x000000, 0.0001)
 			.drawRect(0, 0, window.innerWidth, window.innerHeight)

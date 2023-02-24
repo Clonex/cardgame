@@ -85,6 +85,9 @@ export default class ConnectionHandler {
 			case 'cardStack':
 				game.cardStack.setCards(data.stack);
 				break;
+			case 'cursor':
+				game.cursorScreen.cursorTick(data.player, data.x, data.y);
+				break;
 			case 'playFailed':
 				{
 					const card = game.hand.getCardElem(data.cardID);

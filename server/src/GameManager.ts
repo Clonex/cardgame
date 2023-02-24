@@ -58,6 +58,26 @@ export default class GameManager {
 					}
 				}
 				break;
+			case 'cursor':
+				{
+					const player = conn.player;
+					if (player) {
+						player.parent._players.forEach((currPlayer) => {
+							if (currPlayer.id !== player.id) {
+								this.send(
+									{
+										cmd: 'cursor',
+										x: data.x,
+										y: data.y,
+										player: currPlayer.id,
+									},
+									currPlayer.connection
+								);
+							}
+						});
+					}
+				}
+				break;
 			case 'playCard':
 				{
 					const player = conn.player;
@@ -189,6 +209,12 @@ export default class GameManager {
 			case 'playCard':
 				send({
 					cmd: 'playCard',
+					...extra,
+				});
+				break;
+			case 'cursor':
+				send({
+					cmd: 'cursor',
 					...extra,
 				});
 				break;
