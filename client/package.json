@@ -1,7 +1,7 @@
 {
-	"name": "pixijs-typescript-template",
+	"name": "client",
 	"version": "0.0.1",
-	"description": "pixi.js typescript template",
+	"description": "pixi.js typescript client",
 	"scripts": {
 		"test": "npx jest",
 		"code-coverage": "jest --coverage",

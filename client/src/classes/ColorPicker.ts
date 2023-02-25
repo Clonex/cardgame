@@ -43,8 +43,6 @@ export default class ColorPicker extends PIXI.Container {
 		}
 
 		this.addChild(this.bg, this.container);
-
-		State.events?.on('resize', () => this.updateSize());
 		this.updateSize();
 	}
 

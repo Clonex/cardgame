@@ -36,10 +36,10 @@ class CursorScreen extends PIXI.Graphics {
 		position.visible = true;
 		position.x = x;
 		position.y = y;
-		position.interval = setInterval(() => {
+		position.interval = setTimeout(() => {
 			position.visible = false;
 			this.tick();
-		}, 500);
+		}, 1250);
 
 		this.positions[playerId] = position;
 		this.tick();
