@@ -18,7 +18,7 @@ export class Game {
 
 	setSize() {
 		this.app.renderer.resize(window.innerWidth, window.innerHeight);
-		State.centerElems.forEach((container) => {
+		State.centerElems?.forEach((container) => {
 			container.x = window.innerWidth / 2 - container.width / 2;
 			container.y = window.innerHeight / 2 - container.height / 2;
 		});

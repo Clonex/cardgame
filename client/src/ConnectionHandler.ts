@@ -39,7 +39,7 @@ export default class ConnectionHandler {
 
 	#data(d: { cmd: string; data: string }) {
 		const data = JSON.parse(d.data);
-		const game = State.gameView;
+		const game = State?.gameView;
 		console.log('Got something', data);
 
 		switch (data.cmd) {

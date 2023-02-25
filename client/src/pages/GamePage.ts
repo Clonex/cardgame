@@ -132,7 +132,7 @@ export class GamePage extends PIXI.Container {
 		}, 100);
 		this.on('pointermove', updateMousePos);
 
-		State.events.on('resize', () => this.updatePosition());
+		State.events?.on('resize', () => this.updatePosition());
 		this.updatePosition();
 		this.setTurn('n');
 	}
